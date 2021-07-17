@@ -1,4 +1,4 @@
-package com.target.VolunteeringPlatform.Response;
+package com.target.VolunteeringPlatform.RequestResponse;
 
 public class SignupRequest {
 

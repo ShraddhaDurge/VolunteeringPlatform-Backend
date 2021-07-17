@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    /*@Autowired
+    @Autowired
     UserDetailsServiceImpl userDetailsService;
 
     @Override
@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }*/
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -43,6 +43,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/account/**").permitAll()
                 .antMatchers("/account/h2/**").permitAll()
                 .antMatchers("/user/**").hasAuthority("USER")
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/leader/**").hasAuthority("LEADER")
                 .anyRequest().authenticated();
     }
 }
