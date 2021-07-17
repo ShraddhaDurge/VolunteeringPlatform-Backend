@@ -1,13 +1,12 @@
 package com.target.VolunteeringPlatform.Response;
 
-import java.util.List;
 
 public class LoginResponse {
     private int id;
     private String email;
-    private List<String> roles;
+    private String roles;
 
-    public LoginResponse(int id,String email, List<String> roles) {
+    public LoginResponse(int id,String email, String roles) {
         super();
         this.id = id;
         this.email = email;
@@ -30,11 +29,11 @@ public class LoginResponse {
         this.email = email;
     }
 
-    public List<String> getRoles() {
+    public String getRoles() {
         return roles;
     }
 
-    public void setRoles(List<String> roles) {
+    public void setRoles(String roles) {
         this.roles = roles;
     }
 }

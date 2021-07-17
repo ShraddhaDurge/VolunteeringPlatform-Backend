@@ -1,5 +1,5 @@
 package com.target.VolunteeringPlatform.model;
-
+/*
 
 import javax.persistence.*;
 
@@ -41,4 +41,4 @@ public class Role {
                 ", role='" + role + '\'' +
                 '}';
     }
-}
+}*/

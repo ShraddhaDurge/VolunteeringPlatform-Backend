@@ -1,6 +1,7 @@
 package com.target.VolunteeringPlatform.Service;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+/*import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.target.VolunteeringPlatform.model.Role;
 import com.target.VolunteeringPlatform.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,8 +32,9 @@ public class UserDetailsImpl implements UserDetails {
 	}
 	public static UserDetailsImpl build(User user) {
 		List<GrantedAuthority> authorities = new ArrayList<>();
-			authorities.add(new SimpleGrantedAuthority("USER"));
-
+		for(Role role: user.getRoles()) {
+			authorities.add(new SimpleGrantedAuthority(role.getRole()));
+		}
 		return new UserDetailsImpl(
 				user.getId(),
 				user.getEmail(),
@@ -102,4 +104,4 @@ public class UserDetailsImpl implements UserDetails {
 				", authorities=" + authorities +
 				'}';
 	}
-}
+}*/
