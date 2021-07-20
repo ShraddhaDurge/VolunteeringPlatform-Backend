@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Column;
 import java.util.*;
 
 public class UserDetailsImpl implements UserDetails {
@@ -20,12 +21,17 @@ public class UserDetailsImpl implements UserDetails {
 	@JsonIgnore
 	private String password;
 
+	private String firstname;
+
+	private String lastname;
 	private Collection<? extends GrantedAuthority> authorities;
 	
-	public UserDetailsImpl(int id,String email, String password,
+	public UserDetailsImpl(int id, String firstname, String lastname, String email, String password,
 			Collection<? extends GrantedAuthority> authorities) {
 		super();
 		this.id = id;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
@@ -35,6 +41,8 @@ public class UserDetailsImpl implements UserDetails {
 		authorities.add(new SimpleGrantedAuthority(user.getRole()));
 		return new UserDetailsImpl(
 				user.getId(),
+				user.getFirstname(),
+				user.getLastname(),
 				user.getEmail(),
 				user.getPassword(), 
 				authorities);
@@ -61,6 +69,14 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public String getUsername() {
 		return email;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
 	}
 
 	@Override

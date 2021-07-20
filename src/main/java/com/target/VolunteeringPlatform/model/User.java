@@ -30,6 +30,10 @@ public class User {
     @Column(name="role")
     private String role;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(referencedColumnName = "ID", nullable = false, updatable = false)
+    private Set<Event> events;
+
     public User() {
 
     }
@@ -90,6 +94,14 @@ public class User {
         this.active = active;
     }
 
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -99,7 +111,8 @@ public class User {
                 ", lastname='" + lastname + '\'' +
                 ", password='" + password + '\'' +
                 ", active=" + active +
-                ", roles=" + role +
+                ", role='" + role + '\'' +
+                ", events=" + events +
                 '}';
     }
 

@@ -5,10 +5,13 @@ public class LoginResponse {
     private int id;
     private String email;
     private String roles;
-
-    public LoginResponse(int id,String email, String roles) {
+    String firstname;
+    String lastname;
+    public LoginResponse(int id, String firstname, String lastname, String email, String roles) {
         super();
         this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.roles = roles;
     }
@@ -35,6 +38,21 @@ public class LoginResponse {
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 }
 

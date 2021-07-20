@@ -59,15 +59,17 @@ public class UserController {
        Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+       SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+       UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        List<String> roles = userDetails.getAuthorities().stream()
+       List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new LoginResponse(userDetails.getId(),
-                userDetails.getEmail(), roles.get(0)));
+       return ResponseEntity.ok(new LoginResponse(userDetails.getId(),userDetails.getFirstname(), userDetails.getLastname(),
+               userDetails.getEmail(), roles.get(0)));
     }
+
+
 }

@@ -28,12 +28,13 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
 	@Override
 	@Transactional
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
 		User user = userRepository.findByEmail(email);
 		System.out.println(user);
 		if (user == null){
 			throw new UsernameNotFoundException("Invalid username or password."+email);
 		}
 		return UserDetailsImpl.build(user);
+
 	}
 }
