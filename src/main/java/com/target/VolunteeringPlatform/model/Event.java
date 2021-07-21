@@ -16,8 +16,8 @@ public class Event {
     @Column(name="event_id")
     private int event_id;
 
-    @Column(name="eventType")
-    private String eventType;
+    @Column(name="event_type")
+    private String event_type;
 
     @Column(name="name")
     private String name;
@@ -28,29 +28,29 @@ public class Event {
     @Column(name="venue")
     private String venue;
 
-    @Column(name="startTime")
-    private Timestamp startTime;
+    @Column(name="start_time")
+    private Timestamp start_time;
 
-    @Column(name="endTime")
-    private Timestamp endTime;
+    @Column(name="end_time")
+    private Timestamp end_time;
 
-    public Event(String eventType, String name, String description, String venue, Timestamp startTime,Timestamp endTime) {
-        this.eventType = eventType;
+    public Event(String event_type, String name, String description, String venue, Timestamp start_time,Timestamp end_time) {
+        this.event_type = event_type;
         this.name = name;
         this.description = description;
         this.venue = venue;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.start_time = start_time;
+        this.end_time = end_time;
     }
 
-    public Event(int event_id, String eventType, String name, String description, String venue, Timestamp startTime,Timestamp endTime) {
+    public Event(int event_id, String event_type, String name, String description, String venue, Timestamp start_time,Timestamp end_time) {
         this.event_id = event_id;
-        this.eventType = eventType;
+        this.event_type = event_type;
         this.name = name;
         this.description = description;
         this.venue = venue;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.start_time = start_time;
+        this.end_time = end_time;
     }
 
     public Event() {
@@ -65,13 +65,6 @@ public class Event {
         this.event_id = event_id;
     }
 
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
 
     public String getName() {
         return name;
@@ -97,19 +90,40 @@ public class Event {
         this.venue = venue;
     }
 
-    public Timestamp getStartTime() {
-        return startTime;
+    public String getEvent_type() {
+        return event_type;
     }
 
-    public void setStartTime(Timestamp startTime) {
-        this.startTime = startTime;
+    public void setEvent_type(String event_type) {
+        this.event_type = event_type;
     }
 
-    public Timestamp getEndTime() {
-        return endTime;
+    public Timestamp getStart_time() {
+        return start_time;
     }
 
-    public void setEndTime(Timestamp endTime) {
-        this.endTime = endTime;
+    public void setStart_time(Timestamp start_time) {
+        this.start_time = start_time;
+    }
+
+    public Timestamp getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(Timestamp end_time) {
+        this.end_time = end_time;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "event_id=" + event_id +
+                ", event_type='" + event_type + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", venue='" + venue + '\'' +
+                ", start_time=" + start_time +
+                ", end_time=" + end_time +
+                '}';
     }
 }

@@ -7,6 +7,7 @@ public class LoginResponse {
     private String roles;
     String firstname;
     String lastname;
+
     public LoginResponse(int id, String firstname, String lastname, String email, String roles) {
         super();
         this.id = id;

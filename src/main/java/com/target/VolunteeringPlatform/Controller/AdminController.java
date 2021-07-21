@@ -4,18 +4,15 @@ import com.target.VolunteeringPlatform.RequestResponse.MessageResponse;
 import com.target.VolunteeringPlatform.Service.EventService;
 import com.target.VolunteeringPlatform.Service.UserDetailsServiceImpl;
 import com.target.VolunteeringPlatform.model.Event;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("/account/admin")
 public class AdminController {
     @Autowired
@@ -35,12 +32,12 @@ public class AdminController {
         System.out.println(event);
 
         Event addEvent = new Event(
-                event.getEventType(),
+                event.getEvent_type(),
                 event.getName(),
                 event.getDescription(),
                 event.getVenue(),
-                event.getStartTime(),
-                event.getEndTime()
+                event.getStart_time(),
+                event.getEnd_time()
         );
         eventService.addEvent(addEvent);
 

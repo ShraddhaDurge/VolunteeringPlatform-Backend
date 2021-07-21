@@ -1,5 +1,7 @@
 package com.target.VolunteeringPlatform.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -30,8 +32,13 @@ public class User {
     @Column(name="role")
     private String role;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(referencedColumnName = "ID", nullable = false, updatable = false)
+    @JoinTable(
+            name = "user_events",
+            joinColumns = @JoinColumn(name = "user_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "events_event_id")
+    )
     private Set<Event> events;
 
     public User() {
@@ -43,6 +50,17 @@ public class User {
         this.firstname = firstname;
         this.lastname = lastname;
         this.password = password;
+    }
+
+    public User(int id, String email, String firstname, String lastname, String password, String role, Set<Event> events ) {
+        super();
+        this.id = id;
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.role = role;
+        this.events = events;
     }
 
     public int getId() {
@@ -102,6 +120,14 @@ public class User {
         this.events = events;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -116,11 +142,4 @@ public class User {
                 '}';
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }
