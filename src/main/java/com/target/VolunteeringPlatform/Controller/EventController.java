@@ -3,6 +3,7 @@ package com.target.VolunteeringPlatform.Controller;
 import com.target.VolunteeringPlatform.DAO.EventRepository;
 import com.target.VolunteeringPlatform.DAO.UserRepository;
 import com.target.VolunteeringPlatform.RequestResponse.MessageResponse;
+import com.target.VolunteeringPlatform.RequestResponse.SignupRequest;
 import com.target.VolunteeringPlatform.Service.EventService;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;
@@ -32,14 +33,8 @@ public class EventController {
     }
 
     @GetMapping(value = "/allEvents")
-    public List<Event> getEvents() {
+    public List<Event> getAllEvents() {
         return eventService.getAllEvents();
-    }
-
-    @GetMapping(value = "/weekendEvents")
-    public List<Event> getWeekendEvents() {
-        int futureEvent = 1;
-        return eventService.getWeekendEvents(futureEvent);
     }
 
     @GetMapping(value = "/pastEvents")
@@ -74,46 +69,8 @@ public class EventController {
         return eventService.getAllParticipantsByEventId(eventId);
     }
 
-    @GetMapping(value = "/ngoWebinars")
-    public List<Event> getNGOWebinarEvents() {
-        int futureEvent = 1;
-        return eventService.getNGOWebinarsEvents(futureEvent);
+    @GetMapping(value = "/getEventsList/{isFutureEvent}/{eventType:[a-zA-Z &+-]*}")
+    public List<Event> getEventsList(@PathVariable Boolean isFutureEvent, @PathVariable String eventType) {
+        return eventService.getEvents(isFutureEvent, eventType);
     }
-
-    @GetMapping(value = "/foodForThoughtEvents")
-    public List<Event> getFoodForThoughtEvents() {
-        int futureEvent = 1;
-        return eventService.getFoodForThoughtEvents(futureEvent);
-    }
-
-    @GetMapping(value = "/artAndCraftEvents")
-    public List<Event> getArtAndCraftEvents() {
-        int futureEvent = 1;
-        return eventService.getArtAndCraftsEvents(futureEvent);
-    }
-
-    @GetMapping(value = "/pastWeekendEvents")
-    public List<Event> getPastWeekendEvents() {
-        int pastEvent = 0;
-        return eventService.getWeekendEvents(pastEvent);
-    }
-
-    @GetMapping(value = "/pastNgoWebinars")
-    public List<Event> getPastNGOWebinarEvents() {
-        int pastEvent = 0;
-        return eventService.getNGOWebinarsEvents(pastEvent);
-    }
-
-    @GetMapping(value = "/pastFoodForThoughtEvents")
-    public List<Event> getPastFoodForThoughtEvents() {
-        int pastEvent = 0;
-        return eventService.getFoodForThoughtEvents(pastEvent);
-    }
-
-    @GetMapping(value = "/pastArtAndCraftEvents")
-    public List<Event> getPastArtAndCraftEvents() {
-        int pastEvent = 0;
-        return eventService.getArtAndCraftsEvents(pastEvent);
-    }
-
 }

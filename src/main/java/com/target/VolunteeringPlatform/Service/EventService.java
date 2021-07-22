@@ -48,28 +48,6 @@ public class EventService {
         eventRepository.deleteById(id);
     }
 
-    public List<Event> getWeekendEvents(int futureEvent) {
-        Date date = new Date();
-        Timestamp currTimestamp = new Timestamp(date.getTime());
-        List<Event> futureEvents = new ArrayList<>();
-        List<Event> pastEvents = new ArrayList<>();
-        List<Event> allEvents = eventRepository.findAll();
-        for(Event event : allEvents) {
-            if (event.getEvent_type().equalsIgnoreCase("Weekend event")) {
-                if(event.getStart_time().after(currTimestamp)) {
-                    futureEvents.add(event);
-                    System.out.println(event.getName() + " added");
-                } else {
-                    pastEvents.add(event);
-                }
-            }
-        }
-        if(futureEvent == 1)
-            return futureEvents;
-        else
-            return pastEvents;
-    }
-
     public List<Event> getPastEvents() {
         Date date = new Date();
         Timestamp currTimestamp = new Timestamp(date.getTime());
@@ -107,67 +85,22 @@ public class EventService {
         return eventParticipants;
     }
 
-    public List<Event> getNGOWebinarsEvents(int futureEvent) {
+    public List<Event> getEvents(Boolean isFutureEvent, String eventType) {
         Date date = new Date();
         Timestamp currTimestamp = new Timestamp(date.getTime());
         List<Event> futureEvents = new ArrayList<>();
         List<Event> pastEvents = new ArrayList<>();
         List<Event> allEvents = eventRepository.findAll();
         for(Event event : allEvents) {
-            if (event.getEvent_type().equalsIgnoreCase("NGO Webinars")) {
+            if (event.getEvent_type().equalsIgnoreCase(eventType)) {
                 if(event.getStart_time().after(currTimestamp)) {
                     futureEvents.add(event);
-                    System.out.println(event.getName() + " added");
                 } else {
                     pastEvents.add(event);
                 }
             }
         }
-        if(futureEvent == 1)
-            return futureEvents;
-        else
-            return pastEvents;
-    }
-
-    public List<Event> getFoodForThoughtEvents(int futureEvent) {
-        Date date = new Date();
-        Timestamp currTimestamp = new Timestamp(date.getTime());
-        List<Event> futureEvents = new ArrayList<>();
-        List<Event> pastEvents = new ArrayList<>();
-        List<Event> allEvents = eventRepository.findAll();
-        for(Event event : allEvents) {
-            if (event.getEvent_type().equalsIgnoreCase("Food For Thought")) {
-                if(event.getStart_time().after(currTimestamp)) {
-                    futureEvents.add(event);
-                    System.out.println(event.getName() + " added");
-                } else {
-                    pastEvents.add(event);
-                }
-            }
-        }
-        if(futureEvent == 1)
-            return futureEvents;
-        else
-            return pastEvents;
-    }
-
-    public List<Event> getArtAndCraftsEvents(int futureEvent) {
-        Date date = new Date();
-        Timestamp currTimestamp = new Timestamp(date.getTime());
-        List<Event> futureEvents = new ArrayList<>();
-        List<Event> pastEvents = new ArrayList<>();
-        List<Event> allEvents = eventRepository.findAll();
-        for(Event event : allEvents) {
-            if (event.getEvent_type().equalsIgnoreCase("Art And Craft")) {
-                if(event.getStart_time().after(currTimestamp)) {
-                    futureEvents.add(event);
-                    System.out.println(event.getName() + " added");
-                } else {
-                    pastEvents.add(event);
-                }
-            }
-        }
-        if(futureEvent == 1)
+        if(isFutureEvent == true)
             return futureEvents;
         else
             return pastEvents;
