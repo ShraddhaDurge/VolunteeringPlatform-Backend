@@ -73,4 +73,9 @@ public class EventController {
     public List<Event> getEventsList(@PathVariable Boolean isFutureEvent, @PathVariable String eventType) {
         return eventService.getEvents(isFutureEvent, eventType);
     }
+
+    @GetMapping(value = "/getEventParticipateCount/{id}")
+    public int getEventParticipateCount(@PathVariable("id") int userId) {
+        return eventService.getEventParticipateCount(userId);
+    }
 }

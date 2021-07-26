@@ -105,4 +105,14 @@ public class EventService {
         else
             return pastEvents;
     }
+
+    public int getEventParticipateCount(int userId) {
+        User user = userRepository.findById(userId);
+        Set<Event> events = user.getEvents();
+        int eventCount = 0;
+        for(Event event : events) {
+           eventCount++;
+        }
+        return eventCount;
+    }
 }
