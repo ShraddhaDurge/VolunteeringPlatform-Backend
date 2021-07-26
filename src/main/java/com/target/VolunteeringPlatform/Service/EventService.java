@@ -106,7 +106,7 @@ public class EventService {
             return pastEvents;
     }
 
-    public int getEventParticipateCount(int userId) {
+    public int getEventParticipatedCount(int userId) {
         User user = userRepository.findById(userId);
         Set<Event> events = user.getEvents();
         int eventCount = 0;
