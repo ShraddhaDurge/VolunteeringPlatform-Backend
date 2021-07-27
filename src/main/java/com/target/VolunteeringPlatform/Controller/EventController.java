@@ -2,6 +2,7 @@ package com.target.VolunteeringPlatform.Controller;
 
 import com.target.VolunteeringPlatform.DAO.EventRepository;
 import com.target.VolunteeringPlatform.DAO.UserRepository;
+import com.target.VolunteeringPlatform.RequestResponse.EventParticipatedResponse;
 import com.target.VolunteeringPlatform.RequestResponse.MessageResponse;
 import com.target.VolunteeringPlatform.RequestResponse.SignupRequest;
 import com.target.VolunteeringPlatform.Service.EventService;
@@ -74,8 +75,9 @@ public class EventController {
         return eventService.getEvents(isFutureEvent, eventType);
     }
 
-    @GetMapping(value = "/getEventParticipatedCount/{id}")
-    public int getEventParticipatedCount(@PathVariable("id") int userId) {
-        return eventService.getEventParticipatedCount(userId);
+    @GetMapping(value = "/getEventParticipated/{id}")
+    public EventParticipatedResponse getEventParticipated(@PathVariable("id") int userId) {
+       // return eventService.getEventParticipatedCount(userId);
+        return eventService.getEventsParticipated(userId);
     }
 }

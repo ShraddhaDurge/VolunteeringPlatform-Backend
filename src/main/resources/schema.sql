@@ -28,9 +28,3 @@ CREATE TABLE IF NOT EXISTS user_events (
   FOREIGN KEY (events_event_id) REFERENCES event(event_id)
 
 );
-
-
-
-
-
-

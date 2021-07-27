@@ -1,6 +1,5 @@
 package com.target.VolunteeringPlatform.Service;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Timestamp;
@@ -9,11 +8,13 @@ import java.util.Set;
 
 import com.target.VolunteeringPlatform.DAO.EventRepository;
 import com.target.VolunteeringPlatform.DAO.UserRepository;
+import com.target.VolunteeringPlatform.RequestResponse.EventParticipatedResponse;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.SimpleMailMessage;
 
 @Service
 public class EventService {
@@ -23,6 +24,9 @@ public class EventService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    JavaMailSender javaMailSender;
 
     public void addEvent(Event event) {
         eventRepository.save(event);
@@ -70,7 +74,7 @@ public class EventService {
         events.add(event);
         user.setEvents(events);
         userRepository.save(user);
-        //sendMail
+        sendMail(user,event);
     }
 
     public List<User> getAllParticipantsByEventId(int eventId) {
@@ -106,13 +110,46 @@ public class EventService {
             return pastEvents;
     }
 
-    public int getEventParticipatedCount(int userId) {
+//    public int getEventParticipatedCount(int userId) {
+//        User user = userRepository.findById(userId);
+//        Set<Event> events = user.getEvents();
+//        int eventCount = 0;
+//        for(Event event : events) {
+//           eventCount++;
+//        }
+//        return eventCount;
+//    }
+
+    public EventParticipatedResponse getEventsParticipated(int userId) {
+
         User user = userRepository.findById(userId);
         Set<Event> events = user.getEvents();
         int eventCount = 0;
         for(Event event : events) {
-           eventCount++;
+            eventCount++;
         }
-        return eventCount;
+        EventParticipatedResponse eventResponse = new EventParticipatedResponse(events,eventCount);
+        return eventResponse;
+    }
+
+    public void sendMail(User user, Event event) {
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(user.getEmail());
+        msg.setFrom(event.getName()+ " Team <helping.hands@gmail.com>");
+        msg.setSubject("Successfully Registered");
+        msg.setText(
+                "Dear " + user.getFirstname() + " " + user.getLastname() + ", \n" +
+                        "You have been successfully registered for " + event.getName() + ". \n" +
+                        "This volunteering event is for "+ event.getDescription() + ".\n" +
+                        "The duration of event is from "+ event.getStart_time() + " to " + event.getEnd_time()+". \n" +
+                        "Kindly show this email at the venue for the entry.\n\n" +
+                        "Regards,\n" +
+                        "Helping Hands Team"
+        );
+        try{
+            javaMailSender.send(msg);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }
