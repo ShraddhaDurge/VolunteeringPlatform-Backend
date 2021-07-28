@@ -77,7 +77,6 @@ public class EventController {
 
     @GetMapping(value = "/getEventParticipated/{id}")
     public EventParticipatedResponse getEventParticipated(@PathVariable("id") int userId) {
-       // return eventService.getEventParticipatedCount(userId);
         return eventService.getEventsParticipated(userId);
     }
 }

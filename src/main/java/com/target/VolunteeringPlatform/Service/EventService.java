@@ -110,16 +110,6 @@ public class EventService {
             return pastEvents;
     }
 
-//    public int getEventParticipatedCount(int userId) {
-//        User user = userRepository.findById(userId);
-//        Set<Event> events = user.getEvents();
-//        int eventCount = 0;
-//        for(Event event : events) {
-//           eventCount++;
-//        }
-//        return eventCount;
-//    }
-
     public EventParticipatedResponse getEventsParticipated(int userId) {
 
         User user = userRepository.findById(userId);
@@ -135,7 +125,7 @@ public class EventService {
     public void sendMail(User user, Event event) {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(user.getEmail());
-        msg.setFrom(event.getName()+ " Team <helping.hands@gmail.com>");
+        msg.setFrom(event.getName()+ " Team <helpinghands.igniteplus@gmail.com>");
         msg.setSubject("Successfully Registered");
         msg.setText(
                 "Dear " + user.getFirstname() + " " + user.getLastname() + ", \n" +
@@ -148,6 +138,7 @@ public class EventService {
         );
         try{
             javaMailSender.send(msg);
+            System.out.println("Email sent successfully!");
         } catch(Exception e) {
             e.printStackTrace();
         }
