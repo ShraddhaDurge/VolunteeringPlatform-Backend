@@ -64,4 +64,16 @@ public class AdminController {
         eventService.addEvent(newEvent);
         return ResponseEntity.ok(new MessageResponse("Event Updated Successfully"));
     }
+
+    @PostMapping(value = "/sendRemainders/{eventId}")
+    public ResponseEntity<?> sendRemainders(@PathVariable("eventId") int eventId) {
+        if (!eventService.existsById(eventId)) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Event Id doesn't exist"));
+        }
+
+        return ResponseEntity.ok(new MessageResponse("Event Updated Successfully"));
+    }
+
 }

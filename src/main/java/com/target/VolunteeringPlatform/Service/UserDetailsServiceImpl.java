@@ -20,6 +20,10 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		userRepository.save(user);
 	}
 
+	public User searchByEmail( String email) {
+       return userRepository.findByEmail(email);
+    }
+
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{

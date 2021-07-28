@@ -43,7 +43,7 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@RequestBody SignupRequest newUser) {
 
-        if (userRepository.findByEmail(newUser.getEmail()) != null) {
+        if (userService.searchByEmail(newUser.getEmail()) != null) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already taken!"));
