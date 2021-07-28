@@ -74,7 +74,7 @@ public class EventService {
         events.add(event);
         user.setEvents(events);
         userRepository.save(user);
-        sendMail(user,event);
+        sendMail(user,event,"Successfully Registered");
     }
 
     public List<User> getAllParticipantsByEventId(int eventId) {
@@ -122,17 +122,18 @@ public class EventService {
         return eventResponse;
     }
 
-    public void sendMail(User user, Event event) {
+    public void sendMail(User user, Event event, String emailSubject) {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(user.getEmail());
         msg.setFrom(event.getName()+ " Team <helpinghands.igniteplus@gmail.com>");
-        msg.setSubject("Successfully Registered");
+        msg.setSubject(emailSubject);
         msg.setText(
                 "Dear " + user.getFirstname() + " " + user.getLastname() + ", \n" +
-                        "You have been successfully registered for " + event.getName() + ". \n" +
-                        "This volunteering event is for "+ event.getDescription() + ".\n" +
-                        "The duration of event is from "+ event.getStart_time() + " to " + event.getEnd_time()+". \n" +
-                        "Kindly show this email at the venue for the entry.\n\n" +
+                        "   You have been successfully registered for " + event.getName() + "." +
+                        "This volunteering event is for "+ event.getDescription() + ".\n\n" +
+                        "Event start time: "+ event.getStart_time() + " \n " +
+                        "Event End Time: "+event.getEnd_time()+". \n\n" +
+                        "Kindly show this email at the venue for the entry.\n\n\n" +
                         "Regards,\n" +
                         "Helping Hands Team"
         );
@@ -141,6 +142,16 @@ public class EventService {
             System.out.println("Email sent successfully!");
         } catch(Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void sendReminders(int eventId) {
+        Event event = eventRepository.getById(eventId);
+        List<User> participants = userRepository.findAll();
+        for(User u : participants) {
+            if(u.getEvents().contains(event)) {
+                sendMail(u,event,"Reminder for the Event.");
+            }
         }
     }
 }

@@ -4,12 +4,15 @@ import com.target.VolunteeringPlatform.RequestResponse.MessageResponse;
 import com.target.VolunteeringPlatform.Service.EventService;
 import com.target.VolunteeringPlatform.Service.UserDetailsServiceImpl;
 import com.target.VolunteeringPlatform.model.Event;
+import com.target.VolunteeringPlatform.model.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -65,15 +68,20 @@ public class AdminController {
         return ResponseEntity.ok(new MessageResponse("Event Updated Successfully"));
     }
 
-    @PostMapping(value = "/sendRemainders/{eventId}")
-    public ResponseEntity<?> sendRemainders(@PathVariable("eventId") int eventId) {
+    @GetMapping(value = "/getAllParticipants/{id}")
+    public List<User> getAllParticipants(@PathVariable("id") int eventId) {
+        return eventService.getAllParticipantsByEventId(eventId);
+    }
+
+    @PostMapping(value = "/sendReminders/{eventId}")
+    public ResponseEntity<?> sendReminders(@PathVariable("eventId") int eventId) {
         if (!eventService.existsById(eventId)) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Event Id doesn't exist"));
         }
-
-        return ResponseEntity.ok(new MessageResponse("Event Updated Successfully"));
+        eventService.sendReminders(eventId);
+        return ResponseEntity.ok(new MessageResponse("Emails are sent successfully!"));
     }
 
 }

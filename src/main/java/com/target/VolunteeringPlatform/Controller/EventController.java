@@ -65,11 +65,6 @@ public class EventController {
         return ResponseEntity.ok(new MessageResponse("User Registered Successfully"));
     }
 
-    @GetMapping(value = "/getAllParticipants/{id}")
-    public List<User> getAllParticipants(@PathVariable("id") int eventId) {
-        return eventService.getAllParticipantsByEventId(eventId);
-    }
-
     @GetMapping(value = "/getEventsList/{isFutureEvent}/{eventType:[a-zA-Z &+-]*}")
     public List<Event> getEventsList(@PathVariable Boolean isFutureEvent, @PathVariable String eventType) {
         return eventService.getEvents(isFutureEvent, eventType);
