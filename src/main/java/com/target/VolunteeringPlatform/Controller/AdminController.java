@@ -83,5 +83,4 @@ public class AdminController {
         eventService.sendReminders(eventId);
         return ResponseEntity.ok(new MessageResponse("Emails are sent successfully!"));
     }
-
 }

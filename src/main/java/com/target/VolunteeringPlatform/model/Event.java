@@ -65,7 +65,6 @@ public class Event {
         this.event_id = event_id;
     }
 
-
     public String getName() {
         return name;
     }

@@ -1,12 +1,10 @@
 package com.target.VolunteeringPlatform.Controller;
 
 import com.target.VolunteeringPlatform.DAO.UserRepository;
-import com.target.VolunteeringPlatform.RequestResponse.LoginRequest;
-import com.target.VolunteeringPlatform.RequestResponse.LoginResponse;
-import com.target.VolunteeringPlatform.RequestResponse.MessageResponse;
-import com.target.VolunteeringPlatform.RequestResponse.SignupRequest;
+import com.target.VolunteeringPlatform.RequestResponse.*;
 import com.target.VolunteeringPlatform.Service.UserDetailsImpl;
 import com.target.VolunteeringPlatform.Service.UserDetailsServiceImpl;
+import com.target.VolunteeringPlatform.model.Profile;
 import com.target.VolunteeringPlatform.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +41,7 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@RequestBody SignupRequest newUser) {
 
-        if (userService.searchByEmail(newUser.getEmail()) != null) {
+        if (userService.userSearchByEmail(newUser.getEmail()) != null) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already taken!"));
@@ -71,6 +69,26 @@ public class UserController {
                userDetails.getEmail(), roles.get(0)));
     }
 
+    //profile handling
+
+    @CrossOrigin("http://localhost:3000")
+    @RequestMapping(value = "/saveProfile", method = RequestMethod.POST)
+    public ResponseEntity<?> createProfile(@RequestBody ProfileRequest profileRequest){
+
+        Profile profile = new Profile(profileRequest.getMobile_number(),profileRequest.getDob(), profileRequest.getAbout(),
+                profileRequest.getGender(),profileRequest.getLocation(),profileRequest.getAddress());
+
+        userService.saveProfile(profile,profileRequest.getEmail());
+
+        return ResponseEntity.ok(new MessageResponse("Profile created successfully!"));
+    }
+
+
+//    @CrossOrigin("http://localhost:3000")
+//    @GetMapping(value = "/getProfile/{userId}")
+//    public ResponseEntity<?> getProfile(@PathVariable int userId){
+//        return ResponseEntity.ok(userService.findProfileByUserId());
+//    }
 
 
 }

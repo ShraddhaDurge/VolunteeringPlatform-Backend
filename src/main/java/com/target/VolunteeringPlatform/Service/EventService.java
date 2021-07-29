@@ -130,10 +130,11 @@ public class EventService {
         msg.setText(
                 "Dear " + user.getFirstname() + " " + user.getLastname() + ", \n" +
                         "   You have been successfully registered for " + event.getName() + "." +
-                        "This volunteering event is for "+ event.getDescription() + ".\n\n" +
+                        "Thank you for signing up for "+ event.getDescription() + ".\n\n"+
                         "Event start time: "+ event.getStart_time() + " \n " +
                         "Event End Time: "+event.getEnd_time()+". \n\n" +
-                        "Kindly show this email at the venue for the entry.\n\n\n" +
+                        "Kindly show this email at the venue for the entry.\n"+
+                        "We are looking forward to seeing you there! \n\n" +
                         "Regards,\n" +
                         "Helping Hands Team"
         );
@@ -141,6 +142,7 @@ public class EventService {
             javaMailSender.send(msg);
             System.out.println("Email sent successfully!");
         } catch(Exception e) {
+            System.out.println("Email not sent.");
             e.printStackTrace();
         }
     }

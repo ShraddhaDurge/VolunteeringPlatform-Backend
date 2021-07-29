@@ -28,3 +28,21 @@ CREATE TABLE IF NOT EXISTS user_events (
   FOREIGN KEY (events_event_id) REFERENCES event(event_id)
 
 );
+
+CREATE TABLE profile (
+    profile_id bigint(20) NOT NULL,
+    mobile_number varchar(10) DEFAULT NULL,
+    dob DATE ,
+    about varchar(255) DEFAULT NULL,
+    gender varchar(10) DEFAULT NULL,
+    location varchar(255) DEFAULT NULL,
+    address varchar(255) DEFAULT NULL,
+    PRIMARY KEY(profile_id)
+);
+
+CREATE TABLE IF NOT EXISTS user_profile (
+  user_user_id  int NOT NULL,
+  profiles_profile_id int NOT NULL,
+  FOREIGN KEY (user_user_id) REFERENCES user(user_id),
+  FOREIGN KEY (profiles_profile_id) REFERENCES profile(profile_id)
+);

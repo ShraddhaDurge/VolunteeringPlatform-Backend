@@ -1,6 +1,9 @@
 package com.target.VolunteeringPlatform.Service;
 
+import com.target.VolunteeringPlatform.DAO.ProfileRepository;
 import com.target.VolunteeringPlatform.DAO.UserRepository;
+import com.target.VolunteeringPlatform.model.Event;
+import com.target.VolunteeringPlatform.model.Profile;
 import com.target.VolunteeringPlatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,10 +12,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	ProfileRepository profileRepository;
 
 	public void saveUser(User user) {
 		user.setActive(1);
@@ -20,9 +29,16 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		userRepository.save(user);
 	}
 
-	public User searchByEmail( String email) {
+	public User userSearchByEmail( String email) {
        return userRepository.findByEmail(email);
     }
+
+	public void saveProfile(Profile profile,String email) {
+		User user = userRepository.findByEmail(email);
+		System.out.println(user);
+		profile.setUser(user);
+		profileRepository.save(profile);
+	}
 
 	@Override
 	@Transactional
@@ -33,7 +49,6 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 			throw new UsernameNotFoundException("Invalid username or password."+email);
 		}
 		return UserDetailsImpl.build(user);
-
 	}
 
 }

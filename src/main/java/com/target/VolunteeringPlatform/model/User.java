@@ -42,8 +42,8 @@ public class User {
     private Set<Event> events;
 
     public User() {
-
     }
+
     public User(String email, String firstname, String lastname, String password) {
         super();
         this.email = email;
@@ -127,6 +127,7 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
 
     @Override
     public String toString() {
