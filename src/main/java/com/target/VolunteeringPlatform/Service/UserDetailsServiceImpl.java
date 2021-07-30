@@ -42,11 +42,21 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	}
 	public Profile findProfileByUserId(int userId) {
 		List<Profile> allProfiles = profileRepository.findAll();
-		Profile profile = new Profile();
-		for(Profile p : allProfiles) {
-			if(p.getUser().getId() == userId) {
-				profile = p;
+		Profile profile = null;
+		try {
+			if(allProfiles == null) {
+				profile = null;
 			}
+			else {
+				for (Profile p : allProfiles) {
+					if (p.getUser().getId() == userId) {
+						profile = p;
+						break;
+					}
+				}
+			}
+		} catch (NullPointerException e) {
+			System.out.println(e);
 		}
 		return profile;
 	}

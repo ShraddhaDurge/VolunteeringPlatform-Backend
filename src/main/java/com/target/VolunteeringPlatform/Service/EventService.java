@@ -131,8 +131,8 @@ public class EventService {
                 "Dear " + user.getFirstname() + " " + user.getLastname() + ", \n" +
                         "   You have been successfully registered for " + event.getName() + "." +
                         "Thank you for signing up for "+ event.getDescription() + ".\n\n"+
-                        "Event start time: "+ event.getStart_time() + " \n " +
-                        "Event End Time: "+event.getEnd_time()+". \n\n" +
+                        "Start Time: "+ event.getStart_time() + " \n " +
+                        "End Time: "+event.getEnd_time()+". \n\n" +
                         "Kindly show this email at the venue for the entry.\n"+
                         "We are looking forward to seeing you there! \n\n" +
                         "Regards,\n" +
