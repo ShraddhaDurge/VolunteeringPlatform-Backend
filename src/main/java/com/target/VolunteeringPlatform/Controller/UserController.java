@@ -84,11 +84,11 @@ public class UserController {
     }
 
 
-//    @CrossOrigin("http://localhost:3000")
-//    @GetMapping(value = "/getProfile/{userId}")
-//    public ResponseEntity<?> getProfile(@PathVariable int userId){
-//        return ResponseEntity.ok(userService.findProfileByUserId());
-//    }
+    @CrossOrigin("http://localhost:3000")
+    @GetMapping(value = "/getProfile/{userId}")
+    public ResponseEntity<?> getProfile(@PathVariable int userId){
+        return ResponseEntity.ok(userService.findProfileByUserId(userId));
+    }
 
 
 }

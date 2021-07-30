@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
@@ -39,7 +40,16 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		profile.setUser(user);
 		profileRepository.save(profile);
 	}
-
+	public Profile findProfileByUserId(int userId) {
+		List<Profile> allProfiles = profileRepository.findAll();
+		Profile profile = new Profile();
+		for(Profile p : allProfiles) {
+			if(p.getUser().getId() == userId) {
+				profile = p;
+			}
+		}
+		return profile;
+	}
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
