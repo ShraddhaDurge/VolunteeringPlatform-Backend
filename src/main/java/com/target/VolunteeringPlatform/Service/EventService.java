@@ -8,7 +8,7 @@ import java.util.Set;
 
 import com.target.VolunteeringPlatform.DAO.EventRepository;
 import com.target.VolunteeringPlatform.DAO.UserRepository;
-import com.target.VolunteeringPlatform.RequestResponse.EventParticipatedResponse;
+import com.target.VolunteeringPlatform.PayloadResponse.EventParticipatedResponse;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +29,16 @@ public class EventService {
     JavaMailSender javaMailSender;
 
     public void addEvent(Event event) {
+        Event addEvent = new Event(
+                event.getEvent_type(),
+                event.getName(),
+                event.getDescription(),
+                event.getVenue(),
+                event.getStart_time(),
+                event.getEnd_time(),
+                event.getImage()
+        );
+
         eventRepository.save(event);
     }
 
@@ -38,6 +48,10 @@ public class EventService {
 
     public boolean existsById(int id) {
         return eventRepository.existsById(id);
+    }
+
+    public Event findByName(String name) {
+        return eventRepository.findByName(name);
     }
 
     public Event getById(int event_id) {
@@ -77,13 +91,21 @@ public class EventService {
         sendMail(user,event,"Successfully Registered");
     }
 
-    public List<User> getAllParticipantsByEventId(int eventId) {
-        Event event = eventRepository.getById(eventId);
+    public List<User> getAllParticipants(String eventName) {
+        //Event event = eventRepository.findByName(eventName);
         List<User> participants = userRepository.findAll();
         List<User> eventParticipants = new ArrayList<>();
+//        for(User u : participants) {
+//            if(u.getEvents().contains(event)) {
+//                eventParticipants.add(u);
+//            }
+//        }
         for(User u : participants) {
-            if(u.getEvents().contains(event)) {
-                eventParticipants.add(u);
+            Set<Event> events = u.getEvents();
+            for(Event e : events) {
+                if (e.getName().equalsIgnoreCase(eventName)) {
+                    eventParticipants.add(u);
+                }
             }
         }
         return eventParticipants;
@@ -147,13 +169,21 @@ public class EventService {
         }
     }
 
-    public void sendReminders(int eventId) {
-        Event event = eventRepository.getById(eventId);
+    public void sendReminders(String eventName) {
+        //Event event = eventRepository.findByName(eventName);
         List<User> participants = userRepository.findAll();
         for(User u : participants) {
-            if(u.getEvents().contains(event)) {
-                sendMail(u,event,"Reminder for the Event.");
+            Set<Event> events = u.getEvents();
+            for(Event e : events) {
+                if (e.getName().equalsIgnoreCase(eventName)) {
+                    sendMail(u,e,"Reminder for the Event.");
+                }
             }
         }
+//        for(User u : participants) {
+//            if(u.getEvents().contains(event)) {
+//                sendMail(u,event,"Reminder for the Event.");
+//            }
+//        }
     }
 }
