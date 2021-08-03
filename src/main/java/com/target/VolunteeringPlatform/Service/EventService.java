@@ -44,7 +44,8 @@ public class EventService {
 //        eventRepository.save(event);
 //    }
 
-    public void addEvent(EventRequest event, byte[] imageBytes) throws IOException {
+    public void addEvent(EventRequest event) throws IOException {
+        byte[] imageBytes = event.getImage().getBytes();
         Event newEvent = new Event(
                 event.getEvent_type(),
                 event.getName(),

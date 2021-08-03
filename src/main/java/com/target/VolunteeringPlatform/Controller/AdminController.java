@@ -40,7 +40,7 @@ public class AdminController {
         System.out.println(eventRequest);
 
         try {
-            eventService.addEvent(eventRequest,eventRequest.getImage().getBytes());
+            eventService.addEvent(eventRequest);
             return ResponseEntity.ok(new MessageResponse("Event Added Successfully!"));
         } catch (IOException e) {
             return ResponseEntity
