@@ -2,9 +2,8 @@ package com.target.VolunteeringPlatform.Controller;
 
 import com.target.VolunteeringPlatform.DAO.EventRepository;
 import com.target.VolunteeringPlatform.DAO.UserRepository;
-import com.target.VolunteeringPlatform.RequestResponse.EventParticipatedResponse;
-import com.target.VolunteeringPlatform.RequestResponse.MessageResponse;
-import com.target.VolunteeringPlatform.RequestResponse.SignupRequest;
+import com.target.VolunteeringPlatform.PayloadResponse.EventParticipatedResponse;
+import com.target.VolunteeringPlatform.PayloadResponse.MessageResponse;
 import com.target.VolunteeringPlatform.Service.EventService;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;

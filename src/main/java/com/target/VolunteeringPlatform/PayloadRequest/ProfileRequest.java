@@ -1,4 +1,4 @@
-package com.target.VolunteeringPlatform.RequestResponse;
+package com.target.VolunteeringPlatform.PayloadRequest;
 
 import java.util.Date;
 import javax.validation.constraints.NotBlank;

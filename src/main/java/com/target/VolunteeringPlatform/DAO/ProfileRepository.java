@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository("profileRepository")
 public interface ProfileRepository extends JpaRepository<Profile,Long>{
-        //Profile getByNumber(String mobile_number);
+
 }

@@ -20,7 +20,7 @@ public class Profile {
     @Column(name ="mobile_number")
     private String mobile_number;
 
-    @DateTimeFormat(pattern ="dd-MM-yyyy")
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
     @NotNull(message = "Please provide a date.")
     @Column(name ="DOB")
     private Date dob;

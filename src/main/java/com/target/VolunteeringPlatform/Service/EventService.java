@@ -1,5 +1,6 @@
 package com.target.VolunteeringPlatform.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Timestamp;
@@ -8,6 +9,7 @@ import java.util.Set;
 
 import com.target.VolunteeringPlatform.DAO.EventRepository;
 import com.target.VolunteeringPlatform.DAO.UserRepository;
+import com.target.VolunteeringPlatform.PayloadRequest.EventRequest;
 import com.target.VolunteeringPlatform.PayloadResponse.EventParticipatedResponse;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class EventService {
@@ -28,18 +31,31 @@ public class EventService {
     @Autowired
     JavaMailSender javaMailSender;
 
-    public void addEvent(Event event) {
-        Event addEvent = new Event(
+//    public void addEvent(EventRequest eventRequest) throws IOException {
+//        Event event = new Event(
+//                eventRequest.getEvent_type(),
+//                eventRequest.getName(),
+//                eventRequest.getDescription(),
+//                eventRequest.getVenue(),
+//                eventRequest.getStart_time(),
+//                eventRequest.getEnd_time(),
+//                eventRequest.getImage().getBytes()
+//        );
+//        eventRepository.save(event);
+//    }
+
+    public void addEvent(EventRequest event, byte[] imageBytes) throws IOException {
+        Event newEvent = new Event(
                 event.getEvent_type(),
                 event.getName(),
                 event.getDescription(),
                 event.getVenue(),
                 event.getStart_time(),
                 event.getEnd_time(),
-                event.getImage()
+                imageBytes
         );
-
-        eventRepository.save(event);
+        //newEvent.setImage(imageBytes);
+        eventRepository.save(newEvent);
     }
 
     public boolean existsByName(String name) {

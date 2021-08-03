@@ -1,18 +1,22 @@
 package com.target.VolunteeringPlatform.Controller;
 
+import com.target.VolunteeringPlatform.PayloadRequest.EventRequest;
 import com.target.VolunteeringPlatform.PayloadResponse.MessageResponse;
 import com.target.VolunteeringPlatform.Service.EventService;
 import com.target.VolunteeringPlatform.Service.UserDetailsServiceImpl;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;
-import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -25,21 +29,24 @@ public class AdminController {
     @Autowired
     UserDetailsServiceImpl userService;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/addEvents")
-    public ResponseEntity<?> addEvent(@Valid @RequestBody Event event) {
-        if (eventService.existsByName(event.getName())) {
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public ResponseEntity<?> addEvent(@RequestBody EventRequest eventRequest){        //@ModelAttribute("event") Event event, @RequestParam(value="file") MultipartFile image
+        if (eventService.existsByName(eventRequest.getName())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Event name already exists"));
+                    .body(new MessageResponse("Event name already exists!"));
         }
-        System.out.println(event);
-        eventService.addEvent(event);
-//        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path("/downloadFile/")
-//                .path(event.getName())
-//                .toUriString();
-        return ResponseEntity.ok(new MessageResponse("Event Added Successfully"));
+        System.out.println(eventRequest);
+
+        try {
+            eventService.addEvent(eventRequest,eventRequest.getImage().getBytes());
+            return ResponseEntity.ok(new MessageResponse("Event Added Successfully!"));
+        } catch (IOException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error:Event not added. Cannot upload image!"));
+        }
     }
 
     @DeleteMapping(value = "/events/{id}")
@@ -47,22 +54,24 @@ public class AdminController {
         if (!eventService.existsById(id)) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Event Id doesn't exist"));
+                    .body(new MessageResponse("Event Id doesn't exist!"));
         }
         eventService.deleteById(id);
-        return ResponseEntity.ok(new MessageResponse("Event Deleted Successfully"));
+        return ResponseEntity.ok(new MessageResponse("Event Deleted Successfully!"));
     }
 
-    @PostMapping(value = "/updateEvents")
-    public ResponseEntity<?> updateEvent(@Valid @RequestBody Event newEvent) {
-        if (!eventService.existsById(newEvent.getEvent_id())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Event Id doesn't exist"));
-        }
-        eventService.addEvent(newEvent);
-        return ResponseEntity.ok(new MessageResponse("Event Updated Successfully"));
-    }
+//    @PostMapping(value = "/updateEvents")
+//    public ResponseEntity<?> updateEvent(@Valid @RequestBody EventRequest eventRequest) {
+//        try {
+//            eventService.addEvent(eventRequest);
+//            return ResponseEntity.ok(new MessageResponse("Event Added Successfully!"));
+//
+//        } catch (IOException e) {
+//            return ResponseEntity
+//                    .badRequest()
+//                    .body(new MessageResponse("Error:Event not added. Cannot upload image!"));
+//        }
+//    }
 
     @GetMapping(value = "/getAllParticipants/{event_name:[a-zA-Z &+-]*}")
     public List<User> getAllParticipants(@PathVariable("event_name") String event_name) {

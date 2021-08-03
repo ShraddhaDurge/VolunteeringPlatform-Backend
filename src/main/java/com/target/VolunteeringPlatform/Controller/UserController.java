@@ -1,7 +1,11 @@
 package com.target.VolunteeringPlatform.Controller;
 
 import com.target.VolunteeringPlatform.DAO.UserRepository;
-import com.target.VolunteeringPlatform.RequestResponse.*;
+import com.target.VolunteeringPlatform.PayloadRequest.LoginRequest;
+import com.target.VolunteeringPlatform.PayloadRequest.ProfileRequest;
+import com.target.VolunteeringPlatform.PayloadRequest.SignupRequest;
+import com.target.VolunteeringPlatform.PayloadResponse.LoginResponse;
+import com.target.VolunteeringPlatform.PayloadResponse.MessageResponse;
 import com.target.VolunteeringPlatform.Service.UserDetailsImpl;
 import com.target.VolunteeringPlatform.Service.UserDetailsServiceImpl;
 import com.target.VolunteeringPlatform.model.Profile;
@@ -17,6 +21,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,14 +81,16 @@ public class UserController {
     @RequestMapping(value = "/saveProfile", method = RequestMethod.POST)
     public ResponseEntity<?> createProfile(@RequestBody ProfileRequest profileRequest){
 
-        Profile profile = new Profile(profileRequest.getMobile_number(),profileRequest.getDob(), profileRequest.getAbout(),
-                profileRequest.getGender(),profileRequest.getLocation(),profileRequest.getAddress());
+        if (userService.userSearchByEmail(profileRequest.getEmail()) == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: User does not exists!"));
+        }
 
-        userService.saveProfile(profile,profileRequest.getEmail());
-
+        Profile profile = userService.saveProfile(profileRequest);
+        System.out.println(profile);
         return ResponseEntity.ok(new MessageResponse("Profile created successfully!"));
     }
-
 
     @CrossOrigin("http://localhost:3000")
     @GetMapping(value = "/getProfile/{userId}")

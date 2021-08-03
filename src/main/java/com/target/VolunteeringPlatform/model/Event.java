@@ -1,12 +1,8 @@
 package com.target.VolunteeringPlatform.model;
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 @Entity
 @Table(name = "event")
 public class Event {
@@ -34,6 +30,11 @@ public class Event {
     @Column(name="end_time")
     private Timestamp end_time;
 
+    @Column(name="image")
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] image;
+
     public Event(String event_type, String name, String description, String venue, Timestamp start_time,Timestamp end_time) {
         this.event_type = event_type;
         this.name = name;
@@ -56,6 +57,26 @@ public class Event {
     public Event() {
     }
 
+    public Event(int event_id, String event_type, String name, String description, String venue, Timestamp start_time, Timestamp end_time, byte[] image) {
+        this.event_id = event_id;
+        this.event_type = event_type;
+        this.name = name;
+        this.description = description;
+        this.venue = venue;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.image = image;
+    }
+
+    public Event(String event_type, String name, String description, String venue, Timestamp start_time, Timestamp end_time, byte[] image) {
+        this.event_type = event_type;
+        this.name = name;
+        this.description = description;
+        this.venue = venue;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.image = image;
+    }
 
     public int getEvent_id() {
         return event_id;
@@ -111,6 +132,14 @@ public class Event {
 
     public void setEnd_time(Timestamp end_time) {
         this.end_time = end_time;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] imageData) {
+        this.image = image;
     }
 
     @Override

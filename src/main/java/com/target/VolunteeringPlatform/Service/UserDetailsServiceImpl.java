@@ -2,6 +2,7 @@ package com.target.VolunteeringPlatform.Service;
 
 import com.target.VolunteeringPlatform.DAO.ProfileRepository;
 import com.target.VolunteeringPlatform.DAO.UserRepository;
+import com.target.VolunteeringPlatform.PayloadRequest.ProfileRequest;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.Profile;
 import com.target.VolunteeringPlatform.model.User;
@@ -12,7 +13,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
@@ -34,14 +39,55 @@ public class UserDetailsServiceImpl implements UserDetailsService{
        return userRepository.findByEmail(email);
     }
 
-	public void saveProfile(Profile profile,String email) {
-		User user = userRepository.findByEmail(email);
-		System.out.println(user);
-		profile.setUser(user);
-		profileRepository.save(profile);
+    public Profile saveProfile(ProfileRequest profileRequest) {
+		User user = userRepository.findByEmail(profileRequest.getEmail());
+		System.out.println(user);;
+
+        List<Profile> allProfiles = profileRepository.findAll();
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        Date date = Date.valueOf(simpleDateFormat.format(profileRequest.getDob()));
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.DATE, 1);
+		Date afterDate= new java.sql.Date(c.getTimeInMillis());
+        Profile profile = null;
+
+        try {
+                for (Profile p : allProfiles) {
+                    if (p.getUser() == user) {
+						p.setAbout(profileRequest.getAbout());
+						p.setAddress(profileRequest.getAddress());
+						p.setGender(profileRequest.getGender());
+						p.setLocation(profileRequest.getLocation());
+						p.setMobile_number(profileRequest.getMobile_number());
+						p.setDob(afterDate);
+                        System.out.println("Profile updated successfully!");
+                        profileRepository.save(p);
+						profile = p;
+                        break;
+                    }
+                }
+        } catch (NullPointerException e) {
+            System.out.println(e);
+        }
+
+        if(profile == null)
+        {
+            profile = new Profile(profileRequest.getMobile_number(), afterDate , profileRequest.getAbout(),
+                    profileRequest.getGender(),profileRequest.getLocation(),profileRequest.getAddress());
+            profile.setUser(user);
+            profileRepository.save(profile);
+        }
+		System.out.println(afterDate);
+        return profile;
 	}
 	public Profile findProfileByUserId(int userId) {
 		List<Profile> allProfiles = profileRepository.findAll();
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
 		Profile profile = null;
 		try {
 			if(allProfiles == null) {
@@ -51,6 +97,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 				for (Profile p : allProfiles) {
 					if (p.getUser().getId() == userId) {
 						profile = p;
+                        Date date = Date.valueOf(simpleDateFormat.format(profile.getDob()));
+                        profile.setDob(date);
+                        System.out.println(profile.getDob());
 						break;
 					}
 				}

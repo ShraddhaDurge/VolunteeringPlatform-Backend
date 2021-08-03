@@ -1,4 +1,4 @@
-package com.target.VolunteeringPlatform.RequestResponse;
+package com.target.VolunteeringPlatform.PayloadResponse;
 
 
 import com.target.VolunteeringPlatform.model.Event;
