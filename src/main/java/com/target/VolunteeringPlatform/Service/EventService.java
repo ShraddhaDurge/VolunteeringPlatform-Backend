@@ -31,19 +31,6 @@ public class EventService {
     @Autowired
     JavaMailSender javaMailSender;
 
-//    public void addEvent(EventRequest eventRequest) throws IOException {
-//        Event event = new Event(
-//                eventRequest.getEvent_type(),
-//                eventRequest.getName(),
-//                eventRequest.getDescription(),
-//                eventRequest.getVenue(),
-//                eventRequest.getStart_time(),
-//                eventRequest.getEnd_time(),
-//                eventRequest.getImage().getBytes()
-//        );
-//        eventRepository.save(event);
-//    }
-
     public void addEvent(EventRequest event) throws IOException {
         byte[] imageBytes = event.getImage().getBytes();
         Event newEvent = new Event(
@@ -55,7 +42,6 @@ public class EventService {
                 event.getEnd_time(),
                 imageBytes
         );
-        //newEvent.setImage(imageBytes);
         eventRepository.save(newEvent);
     }
 
@@ -109,14 +95,9 @@ public class EventService {
     }
 
     public List<User> getAllParticipants(String eventName) {
-        //Event event = eventRepository.findByName(eventName);
         List<User> participants = userRepository.findAll();
         List<User> eventParticipants = new ArrayList<>();
-//        for(User u : participants) {
-//            if(u.getEvents().contains(event)) {
-//                eventParticipants.add(u);
-//            }
-//        }
+
         for(User u : participants) {
             Set<Event> events = u.getEvents();
             for(Event e : events) {
@@ -187,7 +168,6 @@ public class EventService {
     }
 
     public void sendReminders(String eventName) {
-        //Event event = eventRepository.findByName(eventName);
         List<User> participants = userRepository.findAll();
         for(User u : participants) {
             Set<Event> events = u.getEvents();
@@ -197,10 +177,5 @@ public class EventService {
                 }
             }
         }
-//        for(User u : participants) {
-//            if(u.getEvents().contains(event)) {
-//                sendMail(u,event,"Reminder for the Event.");
-//            }
-//        }
     }
 }
