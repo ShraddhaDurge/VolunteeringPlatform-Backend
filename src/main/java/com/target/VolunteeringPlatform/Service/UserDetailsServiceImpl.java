@@ -15,11 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
@@ -83,6 +80,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		System.out.println(afterDate);
         return profile;
 	}
+
 	public Profile findProfileByUserId(int userId) {
 		List<Profile> allProfiles = profileRepository.findAll();
         String pattern = "yyyy-MM-dd";
@@ -109,6 +107,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		}
 		return profile;
 	}
+
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{

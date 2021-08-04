@@ -31,8 +31,8 @@ public class EventService {
     @Autowired
     JavaMailSender javaMailSender;
 
-    public void addEvent(EventRequest event) throws IOException {
-        byte[] imageBytes = event.getImage().getBytes();
+    public void addEvent(EventRequest event, MultipartFile image) throws IOException {
+        byte[] imageBytes = image.getBytes();
         Event newEvent = new Event(
                 event.getEvent_type(),
                 event.getName(),

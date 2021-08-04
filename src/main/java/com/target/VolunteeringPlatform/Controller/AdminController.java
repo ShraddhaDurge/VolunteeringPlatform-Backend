@@ -9,9 +9,10 @@ import com.target.VolunteeringPlatform.model.User;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.core.MediaType;
+//import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,9 +30,8 @@ public class AdminController {
     @Autowired
     UserDetailsServiceImpl userService;
 
-    @PostMapping("/addEvents")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public ResponseEntity<?> addEvent(@RequestBody EventRequest eventRequest){        //@ModelAttribute("event") Event event, @RequestParam(value="file") MultipartFile image
+    @PostMapping(value = "/addEvents", consumes= MediaType.MULTIPART_FORM_DATA_VALUE)                                               //@RequestPart(value = "event") EventRequest eventRequest, @RequestPart(value = "file") MultipartFile image
+    public ResponseEntity<?> addEvent(@ModelAttribute(value = "event") EventRequest eventRequest, @RequestParam(value = "file") MultipartFile image){        //@ModelAttribute("event") Event event, @RequestParam(value="file") MultipartFile image
         if (eventService.existsByName(eventRequest.getName())) {
             return ResponseEntity
                     .badRequest()
@@ -40,7 +40,7 @@ public class AdminController {
         System.out.println(eventRequest);
 
         try {
-            eventService.addEvent(eventRequest);
+            eventService.addEvent(eventRequest,image);
             return ResponseEntity.ok(new MessageResponse("Event Added Successfully!"));
         } catch (IOException e) {
             return ResponseEntity

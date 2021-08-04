@@ -18,7 +18,19 @@ public class EventRequest {
 
     private Timestamp end_time;
 
-    private MultipartFile image;
+    //private MultipartFile image;
+
+    public EventRequest(String event_type, String name, String description, String venue, Timestamp start_time, Timestamp end_time) {
+        this.event_type = event_type;
+        this.name = name;
+        this.description = description;
+        this.venue = venue;
+        this.start_time = start_time;
+        this.end_time = end_time;
+    }
+
+    public EventRequest() {
+    }
 
     public String getName() {
         return name;
@@ -68,18 +80,18 @@ public class EventRequest {
         this.end_time = end_time;
     }
 
-    public MultipartFile getImage() {
-        return image;
-    }
-
-    public void setImage(MultipartFile image) {
-        this.image = image;
-    }
+//    public MultipartFile getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(MultipartFile image) {
+//        this.image = image;
+//    }
 
     @Override
     public String toString() {
         return "Event{" +
-                ", event_type='" + event_type + '\'' +
+                " event_type='" + event_type + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", venue='" + venue + '\'' +

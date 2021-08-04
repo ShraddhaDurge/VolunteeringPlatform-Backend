@@ -32,7 +32,6 @@ public class Event {
 
     @Column(name="image")
     @Lob
-    @Basic(fetch = FetchType.LAZY)
     private byte[] image;
 
     public Event(String event_type, String name, String description, String venue, Timestamp start_time,Timestamp end_time) {
