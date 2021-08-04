@@ -1,24 +1,29 @@
 package com.target.VolunteeringPlatform.PayloadRequest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 
 public class EventRequest {
 
+    @JsonProperty("event_type")
     private String event_type;
 
+    @JsonProperty("name")
     private String name;
 
+    @JsonProperty("description")
     private String description;
 
+    @JsonProperty("venue")
     private String venue;
 
+    @JsonProperty("start_time")
     private Timestamp start_time;
 
+    @JsonProperty("end_time")
     private Timestamp end_time;
-
-    //private MultipartFile image;
 
     public EventRequest(String event_type, String name, String description, String venue, Timestamp start_time, Timestamp end_time) {
         this.event_type = event_type;
@@ -80,18 +85,10 @@ public class EventRequest {
         this.end_time = end_time;
     }
 
-//    public MultipartFile getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(MultipartFile image) {
-//        this.image = image;
-//    }
-
     @Override
     public String toString() {
-        return "Event{" +
-                " event_type='" + event_type + '\'' +
+        return "EventRequest{" +
+                "event_type='" + event_type + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", venue='" + venue + '\'' +
