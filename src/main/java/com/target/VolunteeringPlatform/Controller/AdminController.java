@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+//Controller class for Admin specific functionalities
 @RestController
 @CrossOrigin("http://localhost:3000")
 @RequestMapping("/account/admin")
@@ -27,8 +28,10 @@ public class AdminController {
     @Autowired
     EventService eventService;
 
+    //Post endpoint to add new event details in database
     @PostMapping(value = "/addEvents")
     public ResponseEntity<?> addEvent(@Valid @RequestBody EventRequest eventRequest){
+        //check if event name already exist in database
         if (eventService.existsByName(eventRequest.getName())) {
             return ResponseEntity
                     .badRequest()
@@ -37,6 +40,7 @@ public class AdminController {
         System.out.println(eventRequest);
 
         try {
+            //add event details in database
             eventService.addEvent(eventRequest);
             return ResponseEntity.ok(new MessageResponse("Event Added Successfully!"));
         } catch (IOException e) {
@@ -46,8 +50,10 @@ public class AdminController {
         }
     }
 
+    //Post endpoint to add image of an event in database
     @PostMapping(value = "/addImage/{event_id}", consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addImageToEvent(@PathVariable(value = "event_id") int event_id, @RequestParam(value = "file") MultipartFile image){
+        //check if event exists in database
         if (!eventService.existsById(event_id)) {
             return ResponseEntity
                     .badRequest()
@@ -56,6 +62,7 @@ public class AdminController {
         System.out.println(event_id+"  "+image);
 
         try {
+            //add images of an event in database
             byte[] imageBytes = image.getBytes();
             eventService.addImageToEvent(event_id,imageBytes);
             return ResponseEntity.ok(new MessageResponse("Event Image Added Successfully!"));
@@ -66,41 +73,48 @@ public class AdminController {
         }
     }
 
+    //Post endpoint to delete event details from database
     @DeleteMapping(value = "/events/{id}")
     public ResponseEntity<?> deleteEvent(@PathVariable("id") int id) {
+        //check if event exists in database
         if (!eventService.existsById(id)) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Event Id doesn't exist!"));
         }
-        eventService.deleteById(id);
+        eventService.deleteById(id);        //delete event details from database
         return ResponseEntity.ok(new MessageResponse("Event Deleted Successfully!"));
     }
 
+    //Post endpoint to update event details in database
     @PostMapping(value = "/updateEvents")
     public ResponseEntity<?> updateEvent(@Valid @RequestBody Event updateEvent) {
+        //check if event exists in database
         if (!eventService.existsById(updateEvent.getEvent_id())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Event Id doesn't exist!"));
         }
-        eventService.updateEvent(updateEvent);
+        eventService.updateEvent(updateEvent);      //update event details in database
         return ResponseEntity.ok(new MessageResponse("Event Added Successfully!"));
     }
 
+    //Get endpoint to get list of all participants of an event from database
     @GetMapping(value = "/getAllParticipants/{event_name:[a-zA-Z &+-]*}")
     public List<User> getAllParticipants(@PathVariable("event_name") String event_name) {
         return eventService.getAllParticipants(event_name);
     }
 
+    //Send reminder emails to all participants of an event
     @PostMapping(value = "/sendReminders/{event_name:[a-zA-Z &+-]*}")
     public ResponseEntity<?> sendReminders(@PathVariable("event_name") String event_name) {
+        //check if event exists in database
         if (!eventService.existsByName(event_name)) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Event Id doesn't exist"));
         }
-        eventService.sendReminders(event_name);
+        eventService.sendReminders(event_name);         //send reminder mails
         return ResponseEntity.ok(new MessageResponse("Emails are sent successfully!"));
     }
 }

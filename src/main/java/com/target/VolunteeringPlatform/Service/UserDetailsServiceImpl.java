@@ -35,7 +35,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	public User userSearchByEmail( String email) {
        return userRepository.findByEmail(email);
     }
-
+	public User findUserById( int userId) {
+		return userRepository.findById(userId);
+	}
     public Profile saveProfile(ProfileRequest profileRequest) {
 		User user = userRepository.findByEmail(profileRequest.getEmail());
 		System.out.println(user);;

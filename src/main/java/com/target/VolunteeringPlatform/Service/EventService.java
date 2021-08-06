@@ -11,9 +11,11 @@ import com.target.VolunteeringPlatform.DAO.EventRepository;
 import com.target.VolunteeringPlatform.DAO.UserRepository;
 import com.target.VolunteeringPlatform.PayloadRequest.EventRequest;
 import com.target.VolunteeringPlatform.PayloadResponse.EventParticipatedResponse;
+import com.target.VolunteeringPlatform.PayloadResponse.MessageResponse;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -203,5 +205,17 @@ public class EventService {
                 }
             }
         }
+    }
+
+    public Boolean checkRegisteredEvents(int eventId,int userId) {
+        Event event = eventRepository.getById(eventId);
+        User user = userRepository.findById(userId);
+        Set<Event> events = user.getEvents();
+
+        //check if user has already registers for an event
+        if(events.contains(event)) {
+            return true;
+        }
+        return false;
     }
 }
