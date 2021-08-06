@@ -77,18 +77,16 @@ public class AdminController {
         return ResponseEntity.ok(new MessageResponse("Event Deleted Successfully!"));
     }
 
-//    @PostMapping(value = "/updateEvents")
-//    public ResponseEntity<?> updateEvent(@Valid @RequestBody EventRequest eventRequest) {
-//        try {
-//            eventService.addEvent(eventRequest);
-//            return ResponseEntity.ok(new MessageResponse("Event Added Successfully!"));
-//
-//        } catch (IOException e) {
-//            return ResponseEntity
-//                    .badRequest()
-//                    .body(new MessageResponse("Error:Event not added. Cannot upload image!"));
-//        }
-//    }
+    @PostMapping(value = "/updateEvents")
+    public ResponseEntity<?> updateEvent(@Valid @RequestBody Event updateEvent) {
+        if (!eventService.existsById(updateEvent.getEvent_id())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Event Id doesn't exist!"));
+        }
+        eventService.updateEvent(updateEvent);
+        return ResponseEntity.ok(new MessageResponse("Event Added Successfully!"));
+    }
 
     @GetMapping(value = "/getAllParticipants/{event_name:[a-zA-Z &+-]*}")
     public List<User> getAllParticipants(@PathVariable("event_name") String event_name) {
