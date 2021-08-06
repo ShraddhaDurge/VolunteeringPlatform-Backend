@@ -31,8 +31,6 @@ public class EventService {
     @Autowired
     JavaMailSender javaMailSender;
 
-
-
     public boolean existsByName(String name) {
         return eventRepository.existsByName(name);
     }

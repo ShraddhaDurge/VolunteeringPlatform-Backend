@@ -27,8 +27,8 @@ public class AdminController {
     @Autowired
     EventService eventService;
 
-    @PostMapping(value = "/addEvents")                                               //@RequestPart(value = "event") EventRequest eventRequest, @RequestPart(value = "file") MultipartFile image
-    public ResponseEntity<?> addEvent(@Valid @RequestBody EventRequest eventRequest){        //@Valid @ModelAttribute(value = "event") EventRequest eventRequest, @RequestParam(value = "file") MultipartFile image
+    @PostMapping(value = "/addEvents")
+    public ResponseEntity<?> addEvent(@Valid @RequestBody EventRequest eventRequest){
         if (eventService.existsByName(eventRequest.getName())) {
             return ResponseEntity
                     .badRequest()
@@ -46,9 +46,8 @@ public class AdminController {
         }
     }
 
-    @PostMapping(value = "/addImage/{event_id}", consumes= MediaType.MULTIPART_FORM_DATA_VALUE)                                               //@RequestPart(value = "event") EventRequest eventRequest, @RequestPart(value = "file") MultipartFile image
-    public ResponseEntity<?> addImageToEvent(@PathVariable(value = "event_id") int event_id, @RequestParam(value = "file") MultipartFile image){        //@Valid @ModelAttribute(value = "event") EventRequest eventRequest, @RequestParam(value = "file") MultipartFile image
-        int eventId = (int)event_id;
+    @PostMapping(value = "/addImage/{event_id}", consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> addImageToEvent(@PathVariable(value = "event_id") int event_id, @RequestParam(value = "file") MultipartFile image){
         if (!eventService.existsById(event_id)) {
             return ResponseEntity
                     .badRequest()
