@@ -34,25 +34,6 @@ public class Event {
     @Lob
     private byte[] image;
 
-    public Event(String event_type, String name, String description, String venue, Timestamp start_time,Timestamp end_time) {
-        this.event_type = event_type;
-        this.name = name;
-        this.description = description;
-        this.venue = venue;
-        this.start_time = start_time;
-        this.end_time = end_time;
-    }
-
-    public Event(int event_id, String event_type, String name, String description, String venue, Timestamp start_time,Timestamp end_time) {
-        this.event_id = event_id;
-        this.event_type = event_type;
-        this.name = name;
-        this.description = description;
-        this.venue = venue;
-        this.start_time = start_time;
-        this.end_time = end_time;
-    }
-
     public Event() {
     }
 

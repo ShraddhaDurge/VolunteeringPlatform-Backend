@@ -31,19 +31,7 @@ public class EventService {
     @Autowired
     JavaMailSender javaMailSender;
 
-    public void addEvent(EventRequest event, MultipartFile image) throws IOException {
-        byte[] imageBytes = image.getBytes();
-        Event newEvent = new Event(
-                event.getEvent_type(),
-                event.getName(),
-                event.getDescription(),
-                event.getVenue(),
-                event.getStart_time(),
-                event.getEnd_time(),
-                imageBytes
-        );
-        eventRepository.save(newEvent);
-    }
+
 
     public boolean existsByName(String name) {
         return eventRepository.existsByName(name);
@@ -67,6 +55,29 @@ public class EventService {
 
     public void deleteById(int id) {
         eventRepository.deleteById(id);
+    }
+
+    public void addEvent(EventRequest event) throws IOException {
+        byte[] imageBytes = event.getName().getBytes();
+        Event newEvent = new Event(
+                event.getEvent_type(),
+                event.getName(),
+                event.getDescription(),
+                event.getVenue(),
+                event.getStart_time(),
+                event.getEnd_time(),
+                imageBytes
+        );
+        eventRepository.save(newEvent);
+        System.out.println(newEvent);
+    }
+
+    public void addImageToEvent(int event_id, byte[] imageBytes) throws IOException {
+        Event event = getById(event_id);
+        System.out.println(event + "  "+imageBytes);
+        event.setImage(imageBytes);
+        System.out.println(event.getImage());
+        eventRepository.save(event);
     }
 
     public List<Event> getPastEvents() {

@@ -27,11 +27,8 @@ public class AdminController {
     @Autowired
     EventService eventService;
 
-    @Autowired
-    UserDetailsServiceImpl userService;
-
-    @PostMapping(value = "/addEvents", consumes= MediaType.MULTIPART_FORM_DATA_VALUE)                                               //@RequestPart(value = "event") EventRequest eventRequest, @RequestPart(value = "file") MultipartFile image
-    public ResponseEntity<?> addEvent(@ModelAttribute(value = "event") EventRequest eventRequest, @RequestParam(value = "file") MultipartFile image){        //@ModelAttribute("event") Event event, @RequestParam(value="file") MultipartFile image
+    @PostMapping(value = "/addEvents")                                               //@RequestPart(value = "event") EventRequest eventRequest, @RequestPart(value = "file") MultipartFile image
+    public ResponseEntity<?> addEvent(@Valid @RequestBody EventRequest eventRequest){        //@Valid @ModelAttribute(value = "event") EventRequest eventRequest, @RequestParam(value = "file") MultipartFile image
         if (eventService.existsByName(eventRequest.getName())) {
             return ResponseEntity
                     .badRequest()
@@ -40,12 +37,33 @@ public class AdminController {
         System.out.println(eventRequest);
 
         try {
-            eventService.addEvent(eventRequest,image);
+            eventService.addEvent(eventRequest);
             return ResponseEntity.ok(new MessageResponse("Event Added Successfully!"));
         } catch (IOException e) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error:Event not added. Cannot upload image!"));
+                    .body(new MessageResponse("Error:Event cannot be added"));
+        }
+    }
+
+    @PostMapping(value = "/addImage/{event_id}", consumes= MediaType.MULTIPART_FORM_DATA_VALUE)                                               //@RequestPart(value = "event") EventRequest eventRequest, @RequestPart(value = "file") MultipartFile image
+    public ResponseEntity<?> addImageToEvent(@PathVariable(value = "event_id") int event_id, @RequestParam(value = "file") MultipartFile image){        //@Valid @ModelAttribute(value = "event") EventRequest eventRequest, @RequestParam(value = "file") MultipartFile image
+        int eventId = (int)event_id;
+        if (!eventService.existsById(event_id)) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Event do not exist!"));
+        }
+        System.out.println(event_id+"  "+image);
+
+        try {
+            byte[] imageBytes = image.getBytes();
+            eventService.addImageToEvent(event_id,imageBytes);
+            return ResponseEntity.ok(new MessageResponse("Event Image Added Successfully!"));
+        } catch (IOException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Cannot upload image!"));
         }
     }
 
