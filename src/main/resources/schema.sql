@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS user (
   password varchar(255) DEFAULT NULL,
   active int DEFAULT NULL,
   role varchar(255) DEFAULT NULL,
-  PRIMARY KEY (user_id),
-  UNIQUE KEY (email)
+  PRIMARY KEY (user_id)
+--  UNIQUE KEY (email)
 );
 
 --CREATE TABLE IF NOT EXISTS user_events (

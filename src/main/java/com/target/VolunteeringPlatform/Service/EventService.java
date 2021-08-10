@@ -53,49 +53,7 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-    public void deleteById(int id) {
-        eventRepository.deleteById(id);
-    }
 
-    public void addEvent(EventRequest event) throws IOException {
-        byte[] imageBytes = event.getName().getBytes();
-        Event newEvent = new Event(
-                event.getEvent_type(),
-                event.getName(),
-                event.getDescription(),
-                event.getVenue(),
-                event.getStart_time(),
-                event.getEnd_time(),
-                imageBytes
-        );
-        eventRepository.save(newEvent);
-        System.out.println(newEvent);
-    }
-
-    public void updateEvent(Event updateEvent) {
-        Event event = getById(updateEvent.getEvent_id());
-        event.setEvent_type(updateEvent.getEvent_type());
-        event.setName(updateEvent.getName());
-        event.setDescription(updateEvent.getDescription());
-        event.setVenue(updateEvent.getVenue());
-        event.setStart_time(updateEvent.getStart_time());
-        event.setEnd_time(updateEvent.getEnd_time());
-
-        eventRepository.save(event);
-        System.out.println(event);
-        List<User> participants = getAllParticipants(event.getName());
-        for(User u : participants) {
-            sendMail(u,event,"Event details updated.");
-        }
-    }
-
-    public void addImageToEvent(int event_id, byte[] imageBytes) throws IOException {
-        Event event = getById(event_id);
-        System.out.println(event + "  "+imageBytes);
-        event.setImage(imageBytes);
-        System.out.println(event.getImage());
-        eventRepository.save(event);
-    }
 
     public List<Event> getPastEvents() {
         Date date = new Date();
@@ -118,24 +76,21 @@ public class EventService {
         Set<Event> events = user.getEvents();
         events.add(event);
         user.setEvents(events);
+        long timeDiff = event.getEnd_time().getTime() - event.getStart_time().getTime();
+        double seconds = (double) (timeDiff / 1000);
+        double hours = (seconds / 3600);
+        System.out.println(hours);
+        if(user.getHours() == null )
+            user.setHours(hours);
+        else
+            user.setHours(user.getHours() +hours);
+
+        System.out.println(user.getHours());
         userRepository.save(user);
-        sendMail(user,event,"Successfully Registered");
+        //sendMail(user,event,"Successfully Registered");
     }
 
-    public List<User> getAllParticipants(String eventName) {
-        List<User> participants = userRepository.findAll();
-        List<User> eventParticipants = new ArrayList<>();
 
-        for(User u : participants) {
-            Set<Event> events = u.getEvents();
-            for(Event e : events) {
-                if (e.getName().equalsIgnoreCase(eventName)) {
-                    eventParticipants.add(u);
-                }
-            }
-        }
-        return eventParticipants;
-    }
 
     public List<Event> getEvents(Boolean isFutureEvent, String eventType) {
         Date date = new Date();
@@ -192,18 +147,6 @@ public class EventService {
         } catch(Exception e) {
             System.out.println("Email not sent.");
             e.printStackTrace();
-        }
-    }
-
-    public void sendReminders(String eventName) {
-        List<User> participants = userRepository.findAll();
-        for(User u : participants) {
-            Set<Event> events = u.getEvents();
-            for(Event e : events) {
-                if (e.getName().equalsIgnoreCase(eventName)) {
-                    sendMail(u,e,"Reminder for the Event.");
-                }
-            }
         }
     }
 

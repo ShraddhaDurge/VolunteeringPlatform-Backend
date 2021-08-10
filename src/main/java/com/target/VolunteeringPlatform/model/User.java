@@ -32,6 +32,9 @@ public class User {
     @Column(name="role")
     private String role;
 
+    @Column(name="hours")
+    private Double hours;
+
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -60,6 +63,18 @@ public class User {
         this.lastname = lastname;
         this.password = password;
         this.role = role;
+        this.events = events;
+    }
+
+    public User(int id, String email, String firstname, String lastname, String password, int active, String role, Double hours, Set<Event> events) {
+        this.id = id;
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.active = active;
+        this.role = role;
+        this.hours = hours;
         this.events = events;
     }
 
@@ -128,6 +143,13 @@ public class User {
         this.role = role;
     }
 
+    public Double getHours() {
+        return hours;
+    }
+
+    public void setHours(Double hours) {
+        this.hours = hours;
+    }
 
     @Override
     public String toString() {

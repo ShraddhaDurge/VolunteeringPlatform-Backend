@@ -2,6 +2,7 @@ package com.target.VolunteeringPlatform.Controller;
 
 import com.target.VolunteeringPlatform.PayloadRequest.EventRequest;
 import com.target.VolunteeringPlatform.PayloadResponse.MessageResponse;
+import com.target.VolunteeringPlatform.Service.AdminService;
 import com.target.VolunteeringPlatform.Service.EventService;
 import com.target.VolunteeringPlatform.Service.UserDetailsServiceImpl;
 import com.target.VolunteeringPlatform.model.Event;
@@ -28,6 +29,9 @@ public class AdminController {
     @Autowired
     EventService eventService;
 
+    @Autowired
+    AdminService adminService;
+
     //Post endpoint to add new event details in database
     @PostMapping(value = "/addEvents")
     public ResponseEntity<?> addEvent(@Valid @RequestBody EventRequest eventRequest){
@@ -41,7 +45,7 @@ public class AdminController {
 
         try {
             //add event details in database
-            eventService.addEvent(eventRequest);
+            adminService.addEvent(eventRequest);
             return ResponseEntity.ok(new MessageResponse("Event Added Successfully!"));
         } catch (IOException e) {
             return ResponseEntity
@@ -53,7 +57,7 @@ public class AdminController {
     //Post endpoint to add image of an event in database
     @PostMapping(value = "/addImage/{event_id}", consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addImageToEvent(@PathVariable(value = "event_id") int event_id, @RequestParam(value = "file") MultipartFile image){
-        //check if event exists in database
+
         if (!eventService.existsById(event_id)) {
             return ResponseEntity
                     .badRequest()
@@ -64,7 +68,7 @@ public class AdminController {
         try {
             //add images of an event in database
             byte[] imageBytes = image.getBytes();
-            eventService.addImageToEvent(event_id,imageBytes);
+            adminService.addImageToEvent(event_id,imageBytes);
             return ResponseEntity.ok(new MessageResponse("Event Image Added Successfully!"));
         } catch (IOException e) {
             return ResponseEntity
@@ -82,7 +86,7 @@ public class AdminController {
                     .badRequest()
                     .body(new MessageResponse("Event Id doesn't exist!"));
         }
-        eventService.deleteById(id);        //delete event details from database
+        adminService.deleteById(id);        //delete event details from database
         return ResponseEntity.ok(new MessageResponse("Event Deleted Successfully!"));
     }
 
@@ -95,14 +99,14 @@ public class AdminController {
                     .badRequest()
                     .body(new MessageResponse("Event Id doesn't exist!"));
         }
-        eventService.updateEvent(updateEvent);      //update event details in database
+        adminService.updateEvent(updateEvent);      //update event details in database
         return ResponseEntity.ok(new MessageResponse("Event Added Successfully!"));
     }
 
     //Get endpoint to get list of all participants of an event from database
     @GetMapping(value = "/getAllParticipants/{event_name:[a-zA-Z &+-]*}")
     public List<User> getAllParticipants(@PathVariable("event_name") String event_name) {
-        return eventService.getAllParticipants(event_name);
+        return adminService.getAllParticipants(event_name);
     }
 
     //Send reminder emails to all participants of an event
@@ -114,7 +118,7 @@ public class AdminController {
                     .badRequest()
                     .body(new MessageResponse("Event Id doesn't exist"));
         }
-        eventService.sendReminders(event_name);         //send reminder mails
+        adminService.sendReminders(event_name);         //send reminder mails
         return ResponseEntity.ok(new MessageResponse("Emails are sent successfully!"));
     }
 }
