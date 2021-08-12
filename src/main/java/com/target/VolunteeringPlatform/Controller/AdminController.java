@@ -100,7 +100,7 @@ public class AdminController {
                     .body(new MessageResponse("Event Id doesn't exist!"));
         }
         adminService.updateEvent(updateEvent);      //update event details in database
-        return ResponseEntity.ok(new MessageResponse("Event Added Successfully!"));
+        return ResponseEntity.ok(new MessageResponse("Event Updated Successfully!"));
     }
 
     //Get endpoint to get list of all participants of an event from database
