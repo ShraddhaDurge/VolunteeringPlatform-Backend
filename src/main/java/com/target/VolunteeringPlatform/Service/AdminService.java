@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -56,7 +57,28 @@ public class AdminService {
         System.out.println(event);
         List<User> participants = getAllParticipants(event.getName());
         for(User u : participants) {
-            eventService.sendMail(u,event,"Event details updated.");
+            List<Object> dateTimeDuration = eventService.getEventTimeAndDate(event.getStart_time(), event.getEnd_time());
+            long min = (Long) dateTimeDuration.get(2);
+            String minutes = null;
+            if (min == 0)
+                minutes = "";
+            else
+                minutes = String.valueOf(min) + " minutes";
+
+            String emailText = "Dear " + u.getFirstname() + " " + u.getLastname() + ", \n" +
+                    "Please be informed that the details of event for which you have registered for is changed." + "\n" +
+                    "Updated Event Details:" + "\n\n" +
+                    "Event Name: " + event.getName() +" \n " +
+                    "   Date: " + String.valueOf(dateTimeDuration.get(3)) + " \n " +
+                    "   Time: "+  String.valueOf(dateTimeDuration.get(4)) + " \n " +
+                    "   Duration: " + String.valueOf(dateTimeDuration.get(1)) +" hr " + minutes +" \n " +
+                    "   Venue: " + event.getVenue() +"\n\n"+
+                    "We sincerely apologise for any inconvenience this may cause.\n"+
+                    "We are looking forward to seeing you there! \n\n" +
+                    "Regards,\n" +
+                    "Helping Hands Team";
+
+            eventService.sendMail(u,event,"Event details changed.", emailText);
         }
     }
 
@@ -89,7 +111,29 @@ public class AdminService {
             Set<Event> events = u.getEvents();
             for(Event e : events) {
                 if (e.getName().equalsIgnoreCase(eventName)) {
-                    eventService.sendMail(u,e,"Reminder for the Event.");
+                    List<Object> dateTimeDuration = eventService.getEventTimeAndDate(e.getStart_time(),e.getEnd_time());
+
+                    long min = (Long)dateTimeDuration.get(2) ;
+                    String minutes = null;
+                    if(min == 0 )
+                        minutes = "";
+                    else
+                        minutes = String.valueOf(min) + " minutes";
+
+                    String emailText = "Dear " + u.getFirstname() + " " + u.getLastname() + ", \n" +
+                            e.getName() + " is coming soon and we’d love to hear from you." +"\n" +
+                            "Don’t hesitate to reach out if you have questions, comments, or concerns regarding this year’s event." + "\n\n" +
+                            "Event Details:" + "\n\n " +
+                            "   Date: " + String.valueOf(dateTimeDuration.get(3)) + " \n " +
+                            "   Time: "+  String.valueOf(dateTimeDuration.get(4)) + " \n " +
+                            "   Duration: " + String.valueOf(dateTimeDuration.get(1)) +" hr " + minutes +" \n " +
+                            "   Venue: " + e.getVenue() +"\n\n"+
+                            "Kindly show this email at the venue for the entry.\n"+
+                            "We are looking forward to seeing you there! \n\n" +
+                            "Regards,\n" +
+                            "Helping Hands Team";
+
+                    eventService.sendMail(u,e,"Reminder for the Event.", emailText);
                 }
             }
         }

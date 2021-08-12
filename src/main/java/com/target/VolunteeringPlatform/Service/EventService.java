@@ -1,25 +1,24 @@
 package com.target.VolunteeringPlatform.Service;
 
-import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import com.target.VolunteeringPlatform.DAO.EventRepository;
 import com.target.VolunteeringPlatform.DAO.UserRepository;
-import com.target.VolunteeringPlatform.PayloadRequest.EventRequest;
 import com.target.VolunteeringPlatform.PayloadResponse.EventParticipatedResponse;
-import com.target.VolunteeringPlatform.PayloadResponse.MessageResponse;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class EventService {
@@ -76,18 +75,38 @@ public class EventService {
         Set<Event> events = user.getEvents();
         events.add(event);
         user.setEvents(events);
-        long timeDiff = event.getEnd_time().getTime() - event.getStart_time().getTime();
-        double seconds = (double) (timeDiff / 1000);
-        double hours = (seconds / 3600);
-        System.out.println(hours);
-        if(user.getHours() == null )
-            user.setHours(hours);
-        else
-            user.setHours(user.getHours() +hours);
 
+        List<Object> dateTimeDuration = getEventTimeAndDate(event.getStart_time(), event.getEnd_time());
+
+        long min = (Long)dateTimeDuration.get(2) ;
+        String minutes = null;
+        if(min == 0 )
+            minutes = " ";
+        else
+            minutes = String.valueOf(min) + " minutes";
+
+        String emailText = "Dear " + user.getFirstname() + " " + user.getLastname() + ", \n" +
+                "You have been successfully registered for " + event.getName() + "!" + "\n" +
+                "Thank you for signing up for " + event.getDescription() + ".\n\n" +
+                "Event Details:" + "\n\n " +
+                "   Date: " + String.valueOf(dateTimeDuration.get(3)) + " \n " +
+                "   Time: "+  String.valueOf(dateTimeDuration.get(4)) + " \n " +
+                "   Duration: " + String.valueOf(dateTimeDuration.get(1)) +" hr " + minutes +" \n " +
+                "   Venue: " + event.getVenue() +"\n\n"+
+                "Kindly show this email at the venue for the entry.\n\n"+
+                "We are looking forward to seeing you there! \n\n" +
+                "Regards,\n" +
+                "Helping Hands Team";
+
+        if(user.getHours() == null )
+            user.setHours((Double) dateTimeDuration.get(0));
+        else
+            user.setHours(user.getHours() +(Double) dateTimeDuration.get(0));
         System.out.println(user.getHours());
         userRepository.save(user);
-        //sendMail(user,event,"Successfully Registered");
+
+        sendMail(user,event,"Successfully Registered",emailText);
+
     }
 
 
@@ -125,22 +144,12 @@ public class EventService {
         return eventResponse;
     }
 
-    public void sendMail(User user, Event event, String emailSubject) {
+    public void sendMail(User user, Event event, String emailSubject, String emailText) {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(user.getEmail());
         msg.setFrom(event.getName()+ " Team <helpinghands.igniteplus@gmail.com>");
         msg.setSubject(emailSubject);
-        msg.setText(
-                "Dear " + user.getFirstname() + " " + user.getLastname() + ", \n" +
-                        "   You have been successfully registered for " + event.getName() + "." +
-                        "Thank you for signing up for "+ event.getDescription() + ".\n\n"+
-                        "Start Time: "+ event.getStart_time() + " \n " +
-                        "End Time: "+event.getEnd_time()+". \n\n" +
-                        "Kindly show this email at the venue for the entry.\n"+
-                        "We are looking forward to seeing you there! \n\n" +
-                        "Regards,\n" +
-                        "Helping Hands Team"
-        );
+        msg.setText(emailText);
         try{
             javaMailSender.send(msg);
             System.out.println("Email sent successfully!");
@@ -160,5 +169,42 @@ public class EventService {
             return true;
         }
         return false;
+    }
+
+
+    public List<Object> getEventTimeAndDate(Timestamp startTime, Timestamp endTime)
+    {
+        List<Object> dateTimeDuration = new ArrayList<Object>();
+        long timeDiff = endTime.getTime() - startTime.getTime();
+        double seconds = (double) (timeDiff / 1000);
+        double hours = (seconds / 3600);
+
+        dateTimeDuration.add(hours);
+
+        long daysLong = TimeUnit.MILLISECONDS.toDays(timeDiff);
+        long remainingHoursInMillis = timeDiff - TimeUnit.DAYS.toMillis(daysLong);
+        long hoursLong = TimeUnit.MILLISECONDS.toHours(remainingHoursInMillis);
+        long remainingMinutesInMillis = remainingHoursInMillis - TimeUnit.HOURS.toMillis(hoursLong);
+        long minutesLong = TimeUnit.MILLISECONDS.toMinutes(remainingMinutesInMillis);
+
+        dateTimeDuration.add(hoursLong);
+        dateTimeDuration.add(minutesLong);
+
+        System.out.println(hours + " , " + hoursLong + " , " + minutesLong);
+
+        try {
+            DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
+            Date d = f.parse(startTime.toString());
+            DateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat time = new SimpleDateFormat("hh:mm:ss.S");
+            System.out.println("Date: " + date.format(d));
+            System.out.println("Time: " + time.format(d));
+            dateTimeDuration.add(date.format(d));
+            dateTimeDuration.add(time.format(d));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return dateTimeDuration;
     }
 }
