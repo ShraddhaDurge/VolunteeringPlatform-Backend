@@ -8,7 +8,8 @@ import javax.persistence.*;
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "event_id_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "event_id_seq", sequenceName = "event_id_seq", allocationSize = 1)
     @Column(name="event_id")
     private int event_id;
 

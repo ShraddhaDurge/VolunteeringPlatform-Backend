@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS user (
   password varchar(255) DEFAULT NULL,
   active int DEFAULT NULL,
   role varchar(255) DEFAULT NULL,
+  hours DOUBLE,
   PRIMARY KEY (user_id)
 --  UNIQUE KEY (email)
 );
@@ -47,3 +48,11 @@ CREATE TABLE IF NOT EXISTS user_profile (
   FOREIGN KEY (user_user_id) REFERENCES user(user_id),
   FOREIGN KEY (profiles_profile_id) REFERENCES profile(profile_id)
 );
+
+CREATE SEQUENCE event_id_seq
+  START WITH 11
+  INCREMENT BY 1;
+
+CREATE SEQUENCE user_id_seq
+  START WITH 5
+  INCREMENT BY 1;
