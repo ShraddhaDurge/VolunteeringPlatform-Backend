@@ -1,19 +1,15 @@
 package com.target.VolunteeringPlatform.Controller;
 
-import com.target.VolunteeringPlatform.DAO.EventRepository;
-import com.target.VolunteeringPlatform.DAO.UserRepository;
 import com.target.VolunteeringPlatform.PayloadResponse.EventParticipatedResponse;
 import com.target.VolunteeringPlatform.PayloadResponse.MessageResponse;
 import com.target.VolunteeringPlatform.Service.EventService;
-import com.target.VolunteeringPlatform.Service.UserDetailsServiceImpl;
+import com.target.VolunteeringPlatform.Service.UserService;
 import com.target.VolunteeringPlatform.model.Event;
-import com.target.VolunteeringPlatform.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -23,7 +19,7 @@ public class EventController {
     EventService eventService;
 
     @Autowired
-    UserDetailsServiceImpl userService;
+    UserService userService;
 
     //Get event data by eventId
     @GetMapping(value = "/{id}")

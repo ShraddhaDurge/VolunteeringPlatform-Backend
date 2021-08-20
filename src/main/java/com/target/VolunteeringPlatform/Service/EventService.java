@@ -11,14 +11,11 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import com.target.VolunteeringPlatform.DAO.EventRepository;
-import com.target.VolunteeringPlatform.DAO.UserRepository;
 import com.target.VolunteeringPlatform.PayloadResponse.EventParticipatedResponse;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.SimpleMailMessage;
 
 @Service
 public class EventService {
@@ -27,10 +24,12 @@ public class EventService {
     EventRepository eventRepository;
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @Autowired
-    JavaMailSender javaMailSender;
+    SendEmailService sendEmailService;
+
+
 
     public boolean existsByName(String name) {
         return eventRepository.existsByName(name);
@@ -40,8 +39,8 @@ public class EventService {
         return eventRepository.existsById(id);
     }
 
-    public Event findByName(String name) {
-        return eventRepository.findByName(name);
+    public void deleteById(int id) {
+        eventRepository.deleteById(id);
     }
 
     public Event getById(int event_id) {
@@ -52,7 +51,7 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-
+    public void saveEvent(Event event) {eventRepository.save(event);}
 
     public List<Event> getPastEvents() {
         Date date = new Date();
@@ -70,7 +69,7 @@ public class EventService {
     }
 
     public void registerUserForEvent(int eventId, int userId) {
-        User user = userRepository.findById(userId);
+        User user = userService.findUserById(userId);
         Event event = eventRepository.getById(eventId);
         Set<Event> events = user.getEvents();
         events.add(event);
@@ -79,11 +78,11 @@ public class EventService {
         List<Object> dateTimeDuration = getEventTimeAndDate(event.getStart_time(), event.getEnd_time());
 
         long min = (Long)dateTimeDuration.get(2) ;
-        String minutes = null;
+        String minutes;
         if(min == 0 )
             minutes = " ";
         else
-            minutes = String.valueOf(min) + " minutes";
+            minutes = min + " minutes";
 
         String emailText = "Dear " + user.getFirstname() + " " + user.getLastname() + ", \n" +
                 "You have been successfully registered for " + event.getName() + "!" + "\n" +
@@ -103,9 +102,9 @@ public class EventService {
         else
             user.setHours(user.getHours() +(Double) dateTimeDuration.get(0));
         System.out.println(user.getHours());
-        userRepository.save(user);
+        userService.saveUser(user);
 
-        sendMail(user,event,"Successfully Registered",emailText);
+        sendEmailService.sendMail(user,event,"Successfully Registered",emailText);
 
     }
 
@@ -134,34 +133,19 @@ public class EventService {
 
     public EventParticipatedResponse getEventsParticipated(int userId) {
 
-        User user = userRepository.findById(userId);
+        User user = userService.findUserById(userId);
         Set<Event> events = user.getEvents();
         int eventCount = 0;
-        for(Event event : events) {
+        for (Event event : events) {
             eventCount++;
         }
-        EventParticipatedResponse eventResponse = new EventParticipatedResponse(events,eventCount);
+        EventParticipatedResponse eventResponse = new EventParticipatedResponse(events, eventCount);
         return eventResponse;
     }
 
-    public void sendMail(User user, Event event, String emailSubject, String emailText) {
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo(user.getEmail());
-        msg.setFrom(event.getName()+ " Team <helpinghands.igniteplus@gmail.com>");
-        msg.setSubject(emailSubject);
-        msg.setText(emailText);
-        try{
-            javaMailSender.send(msg);
-            System.out.println("Email sent successfully!");
-        } catch(Exception e) {
-            System.out.println("Email not sent.");
-            e.printStackTrace();
-        }
-    }
-
     public Boolean checkRegisteredEvents(int eventId,int userId) {
-        Event event = eventRepository.getById(eventId);
-        User user = userRepository.findById(userId);
+        Event event = getById(eventId);
+        User user = userService.findUserById(userId);
         Set<Event> events = user.getEvents();
 
         //check if user has already registers for an event

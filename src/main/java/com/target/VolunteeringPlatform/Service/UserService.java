@@ -3,9 +3,9 @@ package com.target.VolunteeringPlatform.Service;
 import com.target.VolunteeringPlatform.DAO.ProfileRepository;
 import com.target.VolunteeringPlatform.DAO.UserRepository;
 import com.target.VolunteeringPlatform.PayloadRequest.ProfileRequest;
-import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.Profile;
 import com.target.VolunteeringPlatform.model.User;
+import com.target.VolunteeringPlatform.model.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserService implements org.springframework.security.core.userdetails.UserDetailsService {
 	@Autowired
 	UserRepository userRepository;
 
@@ -35,10 +35,16 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	public User userSearchByEmail( String email) {
        return userRepository.findByEmail(email);
     }
-	public User findUserById( int userId) {
+
+    public User findUserById( int userId) {
 		return userRepository.findById(userId);
 	}
-    public Profile saveProfile(ProfileRequest profileRequest) {
+
+	public List<User> findAllUsers() {
+		return userRepository.findAll();
+	}
+
+	public Profile saveProfile(ProfileRequest profileRequest) {
 		User user = userRepository.findByEmail(profileRequest.getEmail());
 		System.out.println(user);;
 

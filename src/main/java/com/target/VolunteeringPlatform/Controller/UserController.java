@@ -6,8 +6,8 @@ import com.target.VolunteeringPlatform.PayloadRequest.ProfileRequest;
 import com.target.VolunteeringPlatform.PayloadRequest.SignupRequest;
 import com.target.VolunteeringPlatform.PayloadResponse.LoginResponse;
 import com.target.VolunteeringPlatform.PayloadResponse.MessageResponse;
-import com.target.VolunteeringPlatform.Service.UserDetailsImpl;
-import com.target.VolunteeringPlatform.Service.UserDetailsServiceImpl;
+import com.target.VolunteeringPlatform.Service.UserService;
+import com.target.VolunteeringPlatform.model.UserDetailsImpl;
 import com.target.VolunteeringPlatform.model.Profile;
 import com.target.VolunteeringPlatform.model.User;
 
@@ -21,8 +21,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +30,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     @Autowired
-    UserDetailsServiceImpl userService;
+    UserService userService;
 
     @Autowired
     UserRepository userRepository;

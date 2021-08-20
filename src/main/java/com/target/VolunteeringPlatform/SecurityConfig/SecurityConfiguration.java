@@ -1,6 +1,6 @@
 package com.target.VolunteeringPlatform.SecurityConfig;
 
-import com.target.VolunteeringPlatform.Service.UserDetailsServiceImpl;
+import com.target.VolunteeringPlatform.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    UserService userDetailsService;
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {

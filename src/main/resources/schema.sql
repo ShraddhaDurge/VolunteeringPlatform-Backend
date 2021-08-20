@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS user (
   active int DEFAULT NULL,
   role varchar(255) DEFAULT NULL,
   hours DOUBLE,
-  PRIMARY KEY (user_id)
---  UNIQUE KEY (email)
+  PRIMARY KEY (user_id),
+  UNIQUE KEY (email)
 );
 
 CREATE TABLE IF NOT EXISTS user_events (

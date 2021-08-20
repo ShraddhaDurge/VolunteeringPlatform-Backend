@@ -4,12 +4,10 @@ import com.target.VolunteeringPlatform.PayloadRequest.EventRequest;
 import com.target.VolunteeringPlatform.PayloadResponse.MessageResponse;
 import com.target.VolunteeringPlatform.Service.AdminService;
 import com.target.VolunteeringPlatform.Service.EventService;
-import com.target.VolunteeringPlatform.Service.UserDetailsServiceImpl;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;
 
 import javax.validation.Valid;
-import javax.ws.rs.Consumes;
 //import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +84,7 @@ public class AdminController {
                     .badRequest()
                     .body(new MessageResponse("Event Id doesn't exist!"));
         }
-        adminService.deleteById(id);        //delete event details from database
+        eventService.deleteById(id);        //delete event details from database
         return ResponseEntity.ok(new MessageResponse("Event Deleted Successfully!"));
     }
 

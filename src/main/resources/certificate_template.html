@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{src/main/resources/certificate_style.css}" />
+</head>
+<body th:style="'background: url(' + @{src/main/resources/images/bg.jpg} + ') no-repeat center center fixed; background-size: cover;'">
+
+<center><img src="src/main/resources/images/logobg.jpg" width="180" height="120" th:src="@{src/main/resources/images/logobg.png}"/> </center>
+<h1 id="cert-title">
+    <center>Volunteer Certificate</center>
+</h1>
+<br/><br/>
+<br/>
+<center><p class="smaller" id="cert-declaration">
+    <b>&nbsp;&nbsp;<i>Presented to</i></b>
+</p>
+
+    <h1 id="cert-holder" th:text="${Firstname} + ' ' +${Surname}">
+    </h1>
+
+    <div id="cert-desc">
+    <p class="larger" id='cert-details'>
+        &nbsp;&nbsp;&nbsp;&nbsp;<font size='4'><i>In recognition of your time and dedication in making the</i></font> <font color = "#be2d24" size='5'> <b th:text="${eventName}" > </b></font><font size='4'> <i>a success held at </i></font><font color = "#be2d24" size='5'><b th:text="${eventVenue}"> </b></font><font size='4'>. </font>
+    </p>
+    </div>
+
+</center>
+<p class="sign"><img src="src/main/resources/images/sign.png"  id="sign" th:src="@{src/main/resources/images/sign.png}" /><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Signature</b></p>
+
+
+<p class="large" id='cert-issued'>
+    &nbsp;&nbsp;<b>Issued on:</b> <b th:text="${eventDate}"></b></p>
+</body>
+</html>

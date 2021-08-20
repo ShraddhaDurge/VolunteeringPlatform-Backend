@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css?family=Saira+Condensed:700');
+
+
+@page { size: A4 landscape;}
+
+#logo {
+  width:  40%;
+
+}
+p.sign{
+
+  margin-left: 780px;
+  margin-top: 100px;
+
+}
+p.large{
+
+  margin-top: -25px;
+
+}
+
+div#middle{
+
+
+
+}
+h1#cert-title {
+  font-size: 50px;
+  color: #be2d24;
+}
+
+h1#cert-holder {
+  font-size: 40px;
+  color: #be2d24;
+}
+
+
+div#cert-ceo-design {
+  margin-left: 10%;
+}
+
+h1 {
+  font-family: 'Saira Condensed', sans-serif;
+  margin: 5px 0px;
+}
+
+body {
+  width: 950px;
+  height: 690px;
+  position: absolute;
+  left: 30px;
+  top: 30px;
+  border: 5px solid red;
+
+
+}
+
+p {
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+  margin: 5px 0px;
+}
+
+html {
+  display: inline-block;
+  width: 1024px;
+  height: 768px;
+
+  border: 5px solid red;
+ background:#eee url("bg.jpg") no-repeat;
+   background-size: 100% 100%;
+}
+
+
+p.smaller {
+  margin-top: 8%;
+}
+
+p.smaller {
+  font-size: 17px !important;
+}
+
+div#cert-desc {
+  width: 70%;
+}
+
+p#cert-from {
+  font-family: 'Saira Condensed', sans-serif;
+}
+

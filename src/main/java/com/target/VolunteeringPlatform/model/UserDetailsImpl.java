@@ -1,13 +1,11 @@
-package com.target.VolunteeringPlatform.Service;
+package com.target.VolunteeringPlatform.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 //import com.target.VolunteeringPlatform.model.Role;
-import com.target.VolunteeringPlatform.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
 import java.util.*;
 
 public class UserDetailsImpl implements UserDetails {
