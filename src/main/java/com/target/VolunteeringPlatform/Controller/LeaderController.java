@@ -1,15 +1,12 @@
 package com.target.VolunteeringPlatform.Controller;
 
 import com.target.VolunteeringPlatform.PayloadResponse.MessageResponse;
-import com.target.VolunteeringPlatform.Service.AdminService;
 import com.target.VolunteeringPlatform.Service.EventService;
 import com.target.VolunteeringPlatform.Service.LeaderService;
-import com.target.VolunteeringPlatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -41,4 +38,11 @@ public class LeaderController {
         leaderService.sendCertificates(event_id);         //send certificates mails
         return ResponseEntity.ok(new MessageResponse("Certificates are sent successfully!"));
     }
+
+    //Get endpoint
+    @GetMapping(value = "/userAnalyticsCounts")
+    public Map<String, Integer> userAnalyticsCounts() {
+        return leaderService.userAnalyticsCounts();
+    }
+
 }

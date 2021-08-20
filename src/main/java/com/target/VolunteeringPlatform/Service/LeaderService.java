@@ -1,21 +1,13 @@
 package com.target.VolunteeringPlatform.Service;
 
-import com.target.VolunteeringPlatform.DAO.EventRepository;
-import com.target.VolunteeringPlatform.DAO.UserRepository;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.*;
 import com.lowagie.text.DocumentException;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
 @Service
 public class LeaderService {
@@ -54,17 +46,33 @@ public class LeaderService {
             try {
                 System.out.println("PDF Generating..");
                 sendEmailService.generatePdfFromHtml(html, u.getId());
-                String pathToAttachment = System.getProperty("user.home") + File.separator + String.valueOf(u.getId()) + ".pdf";
+                String pathToAttachment = System.getProperty("user.home") + File.separator + u.getId() + ".pdf";
                 System.out.println(pathToAttachment);
                 sendEmailService.sendEmailWithAttachment(u,event,"Certificate of Participation",
                         "Thank you!",pathToAttachment);
                 System.out.println("Certificate send");
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (DocumentException e) {
+            } catch (IOException | DocumentException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public Map<String, Integer> userAnalyticsCounts() {
+        List<User> users = userService.findAllUsers();
+        List<Event> events = eventService.getAllEvents();
+        List<User> staffs = new ArrayList<>();
+        Map<String, Integer> userAnalytics = new HashMap<>();
+        userAnalytics.put("Events Count",events.size());
+        userAnalytics.put("Users Count",users.size());
+
+        for(User u : users) {
+            if(u.getRole().equalsIgnoreCase("LEADER") || u.getRole().equalsIgnoreCase("ADMIN"))
+                staffs.add(u);
+        }
+        userAnalytics.put("Management members",staffs.size());
+
+        return userAnalytics;
+
     }
 
 
