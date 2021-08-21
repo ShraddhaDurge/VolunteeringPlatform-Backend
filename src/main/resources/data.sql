@@ -14,7 +14,7 @@ INSERT INTO user (user_id, email, first_name, last_name, password, active, role,
 --admin2
 INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (2,'aryams11042000@gmail.com','Ajit','Kale','$2a$10$Av39pS3b1uNlQnzz6lWrKOcl1CJzL9oA41IsEqJ96GJy1sUt9o49S', 1, 'ADMIN',2);
 --leader1
---INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (3,'mspletters@gmail.com','Priya','Kate','$2a$10$SBehPJvm5jWQGmmfTRDtiurFizPhZ2qzIo.hUd19DTkz0kL4IoPku', 1,'LEADER',3);
+INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (3,'mspletters@gmail.com','Priya','Kate','$2a$10$SBehPJvm5jWQGmmfTRDtiurFizPhZ2qzIo.hUd19DTkz0kL4IoPku', 1,'LEADER',3);
 --leader2
 INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (4,'shreya.b.patil.05@gmail.com','Akid','Khan','$2a$10$qsYFGexi12e3pWFM/maa/.n9DLOFWoHV2mL3iU7TclIiv.VAcR6Qq', 1,'LEADER', 2);
 

@@ -40,6 +40,10 @@ public class UserService implements org.springframework.security.core.userdetail
 		return userRepository.findById(userId);
 	}
 
+	public boolean existsById(int id) {
+		return userRepository.existsById(id);
+	}
+
 	public List<User> findAllUsers() {
 		return userRepository.findAll();
 	}

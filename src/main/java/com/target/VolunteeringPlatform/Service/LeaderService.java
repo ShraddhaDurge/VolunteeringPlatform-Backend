@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import com.lowagie.text.DocumentException;
 
@@ -39,10 +43,17 @@ public class LeaderService {
         Event event = eventService.getById(eventId);
         System.out.println(event);
         List<User> participants = adminService.getAllParticipants(event.getName());
-        List<Object> dateTimeDuration = eventService.getEventTimeAndDate(event.getStart_time(), event.getEnd_time());
+        //List<Object> dateTimeDuration = eventService.getEventTimeAndDate(event.getStart_time(), event.getEnd_time());
+        Date date = new Date();
+        Timestamp currTimestamp = new Timestamp(date.getTime());
+
+        String dateIssued = eventService.formatDateTime(currTimestamp.toString()).get(0);   //current date
+        System.out.println("Date: " + dateIssued);
+
         for(User u : participants) {
             System.out.println(u);
-            String html = sendEmailService.parseThymeleafTemplate(u.getFirstname(), u.getLastname(), event.getName(), event.getVenue(),String.valueOf(dateTimeDuration.get(3)));
+            String html = sendEmailService.parseThymeleafTemplate(u.getFirstname(), u.getLastname(), event.getName(),
+                    event.getVenue(), dateIssued, "certificate_template");
             try {
                 System.out.println("PDF Generating..");
                 sendEmailService.generatePdfFromHtml(html, u.getId());
@@ -75,5 +86,31 @@ public class LeaderService {
 
     }
 
+    public void sendNominationCard(int userId,int eventId)
+    {
+        Event event = eventService.getById(eventId);
+        System.out.println(event);
+        Date date = new Date();
+        Timestamp currTimestamp = new Timestamp(date.getTime());
+
+        String dateIssued = eventService.formatDateTime(currTimestamp.toString()).get(0);   //current date
+        System.out.println("Date: " + dateIssued);
+
+        User u = userService.findUserById(userId);
+            System.out.println(u);
+            String html = sendEmailService.parseThymeleafTemplate(u.getFirstname(), u.getLastname(), event.getName(),
+                    event.getVenue(), dateIssued, "nomination_card_template");
+            try {
+                System.out.println("PDF Generating..");
+                sendEmailService.generatePdfFromHtml(html, u.getId());
+                String pathToAttachment = System.getProperty("user.home") + File.separator + u.getId() + ".pdf";
+                System.out.println(pathToAttachment);
+                sendEmailService.sendEmailWithAttachment(u,event,"Nomination for an event",
+                        "Thank you!",pathToAttachment);
+                System.out.println("Nomination card send");
+            } catch (IOException | DocumentException e) {
+                e.printStackTrace();
+            }
+    }
 
 }

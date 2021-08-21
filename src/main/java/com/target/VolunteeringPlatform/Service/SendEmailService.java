@@ -65,7 +65,7 @@ public class SendEmailService {
         }
     }
 
-    public String parseThymeleafTemplate(String firstName, String lastName, String eventName, String venue, String eventDate) {
+    public String parseThymeleafTemplate(String firstName, String lastName, String eventName, String venue, String eventDate, String template) {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
@@ -82,7 +82,7 @@ public class SendEmailService {
 
         System.out.println(firstName + "  " + lastName + "  " +  eventName + "  " + venue + "  " + eventDate);
 
-        return templateEngine.process("certificate_template", context);
+        return templateEngine.process(template, context);
     }
 
     public void generatePdfFromHtml(String html, int userId) throws IOException, DocumentException {

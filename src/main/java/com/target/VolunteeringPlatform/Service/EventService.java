@@ -176,19 +176,30 @@ public class EventService {
 
         System.out.println(hours + " , " + hoursLong + " , " + minutesLong);
 
+        List<String> formattedTimestamp = formatDateTime(startTime.toString());
+        dateTimeDuration.add(formattedTimestamp.get(0));     //date
+        dateTimeDuration.add(formattedTimestamp.get(1));    //time
+
+        return dateTimeDuration;
+    }
+
+    public List<String> formatDateTime(String timestamp)
+    {
+        List<String> formattedDateTime = new ArrayList<>();
+        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
+        Date d = null;
         try {
-            DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
-            Date d = f.parse(startTime.toString());
-            DateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-            DateFormat time = new SimpleDateFormat("hh:mm:ss.S");
-            System.out.println("Date: " + date.format(d));
-            System.out.println("Time: " + time.format(d));
-            dateTimeDuration.add(date.format(d));
-            dateTimeDuration.add(time.format(d));
+            d = f.parse(timestamp);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        DateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat time = new SimpleDateFormat("hh:mm:ss.S");
+        System.out.println("Date: " + date.format(d));
+        System.out.println("Time: " + time.format(d));
+        formattedDateTime.add(date.format(d));
+        formattedDateTime.add(time.format(d));
 
-        return dateTimeDuration;
+        return formattedDateTime;
     }
 }
