@@ -22,7 +22,7 @@ public class AdminService {
     @Autowired
     SendEmailService sendEmailService;
 
-    public void addEvent(EventRequest event) throws IOException {
+    public Event addEvent(EventRequest event) throws IOException {
         Event newEvent = new Event(
                 event.getEvent_type(),
                 event.getName(),
@@ -33,6 +33,7 @@ public class AdminService {
         );
         eventService.saveEvent(newEvent);
         System.out.println(newEvent);
+        return newEvent;
     }
 
     public void updateEvent(Event updateEvent) {

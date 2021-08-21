@@ -2,6 +2,7 @@ package com.target.VolunteeringPlatform.model;
 import java.sql.Timestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "event")
@@ -14,21 +15,27 @@ public class Event {
     private int event_id;
 
     @Column(name="event_type")
+    @NotBlank
     private String event_type;
 
     @Column(name="name")
+    @NotBlank
     private String name;
 
     @Column(name="description")
+    @NotBlank
     private String description;
 
     @Column(name="venue")
+    @NotBlank
     private String venue;
 
     @Column(name="start_time")
+    @NotBlank
     private Timestamp start_time;
 
     @Column(name="end_time")
+    @NotBlank
     private Timestamp end_time;
 
     @Column(name="image")

@@ -3,6 +3,7 @@ package com.target.VolunteeringPlatform.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
@@ -15,15 +16,19 @@ public class User {
     @Column(name="user_id")
     private int id;
 
+    @NotBlank
     @Column(name = "email")
     private String email;
 
+    @NotBlank
     @Column(name = "first_name")
     private String firstname;
 
+    @NotBlank
     @Column(name = "last_name")
     private String lastname;
 
+    @NotBlank
     @Column(name = "password")
     private String password;
 

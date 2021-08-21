@@ -43,8 +43,8 @@ public class AdminController {
 
         try {
             //add event details in database
-            adminService.addEvent(eventRequest);
-            return ResponseEntity.ok(new MessageResponse("Event Added Successfully!"));
+            Event eventResponse = adminService.addEvent(eventRequest);
+            return ResponseEntity.ok(eventResponse);
         } catch (IOException e) {
             return ResponseEntity
                     .badRequest()

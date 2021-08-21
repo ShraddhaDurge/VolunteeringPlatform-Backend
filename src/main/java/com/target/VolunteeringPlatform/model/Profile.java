@@ -3,6 +3,7 @@ package com.target.VolunteeringPlatform.model;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -26,15 +27,19 @@ public class Profile {
     private Date dob;
 
     @Column(name ="about")
+    @NotBlank
     private String about;
 
     @Column(name ="gender")
+    @NotBlank
     private String gender;
 
     @Column(name ="location")
+    @NotBlank
     private String location;
 
     @Column(name ="address")
+    @NotBlank
     private String address;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
