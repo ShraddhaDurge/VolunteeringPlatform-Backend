@@ -29,8 +29,6 @@ public class EventService {
     @Autowired
     SendEmailService sendEmailService;
 
-
-
     public boolean existsByName(String name) {
         return eventRepository.existsByName(name);
     }
@@ -107,8 +105,6 @@ public class EventService {
         sendEmailService.sendMail(user,event,"Successfully Registered",emailText);
 
     }
-
-
 
     public List<Event> getEvents(Boolean isFutureEvent, String eventType) {
         Date date = new Date();
