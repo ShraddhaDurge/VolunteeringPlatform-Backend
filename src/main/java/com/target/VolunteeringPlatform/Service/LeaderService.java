@@ -7,9 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import com.lowagie.text.DocumentException;
 
@@ -68,19 +65,37 @@ public class LeaderService {
         }
     }
 
-    public Map<String, Integer> userAnalyticsCounts() {
+//    public Map<String, Integer> userAnalyticsCounts() {
+//        List<User> users = userService.findAllUsers();
+//        List<Event> events = eventService.getAllEvents();
+//        List<User> staffs = new ArrayList<>();
+//        Map<String, Integer> userAnalytics = new HashMap<>();
+//        userAnalytics.put("Events Count",events.size());
+//        userAnalytics.put("Users Count",users.size());
+//
+//        for(User u : users) {
+//            if(u.getRole().equalsIgnoreCase("LEADER") || u.getRole().equalsIgnoreCase("ADMIN"))
+//                staffs.add(u);
+//        }
+//        userAnalytics.put("Management members",staffs.size());
+//
+//        return userAnalytics;
+//
+//    }
+
+    public List<Integer> userAnalyticsCounts() {
         List<User> users = userService.findAllUsers();
         List<Event> events = eventService.getAllEvents();
         List<User> staffs = new ArrayList<>();
-        Map<String, Integer> userAnalytics = new HashMap<>();
-        userAnalytics.put("Events Count",events.size());
-        userAnalytics.put("Users Count",users.size());
+        List<Integer> userAnalytics = new ArrayList<>();
+        userAnalytics.add(events.size());
+        userAnalytics.add(users.size());
 
         for(User u : users) {
             if(u.getRole().equalsIgnoreCase("LEADER") || u.getRole().equalsIgnoreCase("ADMIN"))
                 staffs.add(u);
         }
-        userAnalytics.put("Management members",staffs.size());
+        userAnalytics.add(staffs.size());
 
         return userAnalytics;
 

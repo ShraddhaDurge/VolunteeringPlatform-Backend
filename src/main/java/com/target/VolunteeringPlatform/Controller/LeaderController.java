@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -45,7 +46,7 @@ public class LeaderController {
 
     //Get endpoint for user analytics data
     @GetMapping(value = "/userAnalyticsCounts")
-    public Map<String, Integer> userAnalyticsCounts() {
+    public List<Integer> userAnalyticsCounts() {
         return leaderService.userAnalyticsCounts();
     }
 
