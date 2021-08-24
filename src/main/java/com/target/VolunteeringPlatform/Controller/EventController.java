@@ -27,13 +27,13 @@ public class EventController {
         return eventService.getById(id);
     }
 
-    //Get all events' data (all types)
+    //Get all events' data (all types of events)
     @GetMapping(value = "/allEvents")
     public List<Event> getAllEvents() {
         return eventService.getAllEvents();
     }
 
-    //Get all past events (all types)
+    //Get all past events (all types of events)
     @GetMapping(value = "/pastEvents")
     public List<Event> getPastEvents() {
         return eventService.getPastEvents();

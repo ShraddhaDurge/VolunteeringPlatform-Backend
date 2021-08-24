@@ -65,6 +65,17 @@ public class SendEmailService {
         }
     }
 
+    void sendHtmlMessage(User user, Event event, String emailSubject, String htmlBody) throws MessagingException {
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        helper.setFrom(event.getName()+ " Team <helpinghands.igniteplus@gmail.com>");
+        helper.setTo(user.getEmail());
+        helper.setSubject(emailSubject);
+        helper.setText(htmlBody, true);
+        javaMailSender.send(message);
+    }
+
     public String parseThymeleafTemplate(String firstName, String lastName, String eventName, String venue, String eventDate, String template) {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setSuffix(".html");

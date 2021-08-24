@@ -10,6 +10,8 @@ import java.sql.Timestamp;
 import java.util.*;
 import com.lowagie.text.DocumentException;
 
+import javax.mail.MessagingException;
+
 @Service
 public class LeaderService {
 
@@ -85,18 +87,20 @@ public class LeaderService {
 
     public List<Integer> userAnalyticsCounts() {
         List<User> users = userService.findAllUsers();
-        List<Event> events = eventService.getAllEvents();
-        List<User> staffs = new ArrayList<>();
+        List<Event> futureEvents = eventService.getEvents(true,"Weekend event");
+        List<Event> pastEvents = eventService.getEvents(false,"Weekend event");
         List<Integer> userAnalytics = new ArrayList<>();
-        userAnalytics.add(events.size());
+        int eventHours = 0;
+        futureEvents.addAll(pastEvents);
+
         userAnalytics.add(users.size());
+        userAnalytics.add(futureEvents.size());
 
-        for(User u : users) {
-            if(u.getRole().equalsIgnoreCase("LEADER") || u.getRole().equalsIgnoreCase("ADMIN"))
-                staffs.add(u);
+        for(Event e : futureEvents) {
+            List<Object> dateTimeDuration = eventService.getEventTimeAndDate(e.getStart_time(),e.getEnd_time());
+            eventHours += ((Long) dateTimeDuration.get(1)).intValue();
         }
-        userAnalytics.add(staffs.size());
-
+        userAnalytics.add(Math.toIntExact(eventHours));
         return userAnalytics;
 
     }
@@ -112,20 +116,16 @@ public class LeaderService {
         System.out.println("Date: " + dateIssued);
 
         User u = userService.findUserById(userId);
-            System.out.println(u);
-            String html = sendEmailService.parseThymeleafTemplate(u.getFirstname(), u.getLastname(), event.getName(),
-                    event.getVenue(), dateIssued, "nomination_card_template");
-            try {
-                System.out.println("PDF Generating..");
-                sendEmailService.generatePdfFromHtml(html, u.getId());
-                String pathToAttachment = System.getProperty("user.home") + File.separator + u.getId() + ".pdf";
-                System.out.println(pathToAttachment);
-                sendEmailService.sendEmailWithAttachment(u,event,"Nomination for an event",
-                        "Thank you!",pathToAttachment);
-                System.out.println("Nomination card send");
-            } catch (IOException | DocumentException e) {
-                e.printStackTrace();
-            }
+        System.out.println(u);
+        String html = sendEmailService.parseThymeleafTemplate(u.getFirstname(), u.getLastname(), event.getName(),
+                    event.getVenue(), dateIssued, "nomination_card");
+
+        try {
+            sendEmailService.sendHtmlMessage(u,event,"Nomination for an event", html);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Nomination card send");
     }
 
 }
