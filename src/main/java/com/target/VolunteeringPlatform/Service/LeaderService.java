@@ -87,20 +87,19 @@ public class LeaderService {
 
     public List<Integer> userAnalyticsCounts() {
         List<User> users = userService.findAllUsers();
-        List<Event> futureEvents = eventService.getEvents(true,"Weekend event");
+        List<Event> allEvents = eventService.getEvents(true,"Weekend event");
         List<Event> pastEvents = eventService.getEvents(false,"Weekend event");
         List<Integer> userAnalytics = new ArrayList<>();
         int eventHours = 0;
-        futureEvents.addAll(pastEvents);
+        allEvents.addAll(pastEvents);
 
-        userAnalytics.add(users.size());
-        userAnalytics.add(futureEvents.size());
-
-        for(Event e : futureEvents) {
+        for(Event e : allEvents) {
             List<Object> dateTimeDuration = eventService.getEventTimeAndDate(e.getStart_time(),e.getEnd_time());
             eventHours += ((Long) dateTimeDuration.get(1)).intValue();
         }
-        userAnalytics.add(Math.toIntExact(eventHours));
+        userAnalytics.add(Math.toIntExact(eventHours));  //Total No. of hours of events
+        userAnalytics.add(users.size());                //No. of users(all roles)
+        userAnalytics.add(allEvents.size());         //No. of events(future + past)
         return userAnalytics;
 
     }
