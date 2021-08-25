@@ -20,5 +20,5 @@ INSERT INTO user (user_id, email, first_name, last_name, password, active, role,
 
 INSERT INTO user_events (user_user_id, events_event_id) VALUES (1,1);
 INSERT INTO user_events (user_user_id, events_event_id) VALUES (2,2);
---INSERT INTO user_events (user_user_id, events_event_id) VALUES (3,1);
+INSERT INTO user_events (user_user_id, events_event_id) VALUES (3,1);
 INSERT INTO user_events (user_user_id, events_event_id) VALUES (4,2);

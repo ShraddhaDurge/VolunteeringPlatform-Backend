@@ -2,37 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" th:href="@{src/main/resources/nomination_card_style.css}" />
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"
           type='text/css'>
     <title>Nomination Card</title>
 </head>
 
-<body>
+<body th:style="'background: url(' + @{src/main/resources/images/cardBackground.jpg} + ') no-repeat center center fixed; background-size: cover;'">
 <div class="title">
     <h1>Nomination for Awards and rewards</h1>
 </div>
 
 <div class="flip-card">
-    <div class="flip-card-inner">
-        <div class="flip-card-front">
-            <img th:src="@{src/main/resources/images/hh.jpg}" />
-        </div>
-        <div class="flip-card-back">
-            <div class="back-header">
-                <img th:src="@{src/main/resources/images/logobg.jpg}" />
-            </div>
-            <div class="back-footer">
-                <h2 th:text=" 'Congratulations ' + ${Firstname} + ' ' + ${Surname} + '!!'" ></h2>
-                <p>You are nominated for Awards and rewards</p>
-                <p><i class="fas fa-award"></i>"Correction does much, but encouragement does more."</p>
-            </div>
-
-        </div>
+    <div class="back-footer">
+        <img th:src="@{src/main/resources/images/logobg.jpg}" />
+        <h2 th:text=" 'Congratulations ' + ${Firstname} + ' ' + ${Surname} + '!!'" ></h2>
+        <p>You are nominated for Awards and rewards</p>
+        <p><i class="fas fa-award"></i>"Correction does much, but encouragement does more."</p>
     </div>
 </div>
 

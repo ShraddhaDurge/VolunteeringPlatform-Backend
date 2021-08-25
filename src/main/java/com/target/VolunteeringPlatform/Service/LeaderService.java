@@ -67,24 +67,6 @@ public class LeaderService {
         }
     }
 
-//    public Map<String, Integer> userAnalyticsCounts() {
-//        List<User> users = userService.findAllUsers();
-//        List<Event> events = eventService.getAllEvents();
-//        List<User> staffs = new ArrayList<>();
-//        Map<String, Integer> userAnalytics = new HashMap<>();
-//        userAnalytics.put("Events Count",events.size());
-//        userAnalytics.put("Users Count",users.size());
-//
-//        for(User u : users) {
-//            if(u.getRole().equalsIgnoreCase("LEADER") || u.getRole().equalsIgnoreCase("ADMIN"))
-//                staffs.add(u);
-//        }
-//        userAnalytics.put("Management members",staffs.size());
-//
-//        return userAnalytics;
-//
-//    }
-
     public List<Integer> userAnalyticsCounts() {
         List<User> users = userService.findAllUsers();
         List<Event> allEvents = eventService.getEvents(true,"Weekend event");

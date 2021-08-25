@@ -50,7 +50,7 @@ public class EventController {
         }
 
         //check if user has already registered for an event
-        if(eventService.checkRegisteredEvents(eventId,userId) == null) {
+        if(eventService.checkRegisteredEvents(eventId,userId)) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("User already registered for the event"));
