@@ -5,6 +5,7 @@ import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,6 +35,24 @@ public class AdminService {
         eventService.saveEvent(newEvent);
         System.out.println(newEvent);
         return newEvent;
+    }
+
+    public void addImageToEvent(int event_id, byte[] imageBytes) throws IOException {
+        Event event = eventService.getById(event_id);
+        System.out.println(event + "  "+imageBytes);
+        String encodedImage = Base64Utils.encodeToString(imageBytes);
+        Event newEvent = new Event(
+                event.getEvent_id(),
+                event.getEvent_type(),
+                event.getName(),
+                event.getDescription(),
+                event.getVenue(),
+                event.getStart_time(),
+                event.getEnd_time(),
+                //imageBytes
+                encodedImage
+        );
+        eventService.saveEvent(newEvent);
     }
 
     public void updateEvent(Event updateEvent) {
@@ -74,23 +93,6 @@ public class AdminService {
 
             sendEmailService.sendMail(u,event,"Event details changed.", emailText);
         }
-    }
-
-    public void addImageToEvent(int event_id, byte[] imageBytes) throws IOException {
-        Event event = eventService.getById(event_id);
-        System.out.println(event + "  "+imageBytes);
-            Event newEvent = new Event(
-                    event.getEvent_id(),
-                    event.getEvent_type(),
-                    event.getName(),
-                    event.getDescription(),
-                    event.getVenue(),
-                    event.getStart_time(),
-                    event.getEnd_time(),
-                    imageBytes
-            );
-        System.out.println(newEvent.getImage());
-        eventService.saveEvent(newEvent);
     }
 
     public List<User> getAllParticipants(String eventName) {

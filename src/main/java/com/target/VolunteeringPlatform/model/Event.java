@@ -38,14 +38,18 @@ public class Event {
     @NotBlank
     private Timestamp end_time;
 
+//    @Column(name="image")
+//    @Lob
+//    private byte[] image;
+
     @Column(name="image")
-    @Lob
-    private byte[] image;
+    private String image;
+
 
     public Event() {
     }
 
-    public Event(int event_id, String event_type, String name, String description, String venue, Timestamp start_time, Timestamp end_time, byte[] image) {
+    public Event(int event_id, String event_type, String name, String description, String venue, Timestamp start_time, Timestamp end_time, String image) {
         this.event_id = event_id;
         this.event_type = event_type;
         this.name = name;
@@ -131,11 +135,11 @@ public class Event {
         this.end_time = end_time;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] imageData) {
+    public void setImage(String imageData) {
         this.image = image;
     }
 

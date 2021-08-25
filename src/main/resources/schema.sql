@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS event (
   venue varchar(256),
   start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   end_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  image BLOB,
+  image varchar(max),
   PRIMARY KEY (event_id)
 );
 
