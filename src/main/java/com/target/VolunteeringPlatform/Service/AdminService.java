@@ -114,46 +114,6 @@ public class AdminService {
         return eventParticipants;
     }
 
-//    public void sendReminders(String eventName) {
-//        List<User> participants = userService.findAllUsers();
-//        for(User u : participants) {
-//            Set<Event> events = u.getEvents();
-//            for(Event e : events) {
-//                if (e.getName().equalsIgnoreCase(eventName)) {
-//                    List<Object> dateTimeDuration = eventService.getEventTimeAndDate(e.getStart_time(),e.getEnd_time());
-//
-//                    long min = (Long)dateTimeDuration.get(2) ;
-//                    String minutes = null;
-//                    if(min == 0 )
-//                        minutes = "";
-//                    else
-//                        minutes = String.valueOf(min) + " minutes";
-//
-//                    String emailText =
-//                            "<h3> Dear " + u.getFirstname() + " " + u.getLastname() + ",</h3> <p>" +
-//                            e.getName() + " is coming soon and we’d love to hear from you." +"<br/>" +
-//                            "Don’t hesitate to reach out if you have questions, comments, or concerns regarding this year’s event." + "<br/><br/>" +
-//                            "Event Details:" + "<br/><br/> " +
-//                            "   Date: " + String.valueOf(dateTimeDuration.get(3)) + " <br/> " +
-//                            "   Time: "+  String.valueOf(dateTimeDuration.get(4)) + " <br/> " +
-//                            "   Duration: " + String.valueOf(dateTimeDuration.get(1)) +" hr " + minutes +" <br/> " +
-//                            "   Venue: " + e.getVenue() +"<br/><br/>"+
-//                            "Kindly show this email at the venue for the entry.<br/>"+
-//                            "We are looking forward to seeing you there! <br/><br/>" +
-//                            "Regards,<br/>" +
-//                            "Helping Hands Team </p>";
-//
-//                    //sendEmailService.sendMail(u,e,"Reminder for the Event.", emailText);
-//                    try {
-//                        sendEmailService.sendHtmlMessage(u,e,"Reminder for the Event.", emailText, resourceFile);
-//                    } catch (MessagingException ex) {
-//                        ex.printStackTrace();
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     public void sendReminders(String eventName) {
         List<User> participants = userService.findAllUsers();
         for(User u : participants) {
@@ -169,14 +129,23 @@ public class AdminService {
                     else
                         minutes = String.valueOf(min) + " minutes";
 
+                    String emailText =
+                            "<h2> Dear " + u.getFirstname() + " " + u.getLastname() + ",</h2> <p>" +
+                            e.getName() + " is coming soon and we’d love to hear from you." +"<br/>" +
+                            "Don’t hesitate to reach out if you have questions, comments, or concerns regarding this year’s event." + "<br/><br/>" +
+                            "Event Details:" + "<br/><br/> " +
+                            "   Date: " + String.valueOf(dateTimeDuration.get(3)) + " <br/> " +
+                            "   Time: "+  String.valueOf(dateTimeDuration.get(4)) + " <br/> " +
+                            "   Duration: " + String.valueOf(dateTimeDuration.get(1)) +" hr " + minutes +" <br/> " +
+                            "   Venue: " + e.getVenue() +"<br/><br/>"+
+                            "Kindly show this email at the venue for the entry.<br/>"+
+                            "We are looking forward to seeing you there! <br/><br/>" +
+                            "Regards,<br/>" +
+                            "Helping Hands Team </p>";
+
                     //sendEmailService.sendMail(u,e,"Reminder for the Event.", emailText);
-                    String html = sendEmailService.parseReminderTemplate(u.getFirstname(), u.getLastname(),
-                                                 e.getName(), e.getVenue(), String.valueOf(dateTimeDuration.get(3)),
-                                                 String.valueOf(dateTimeDuration.get(4)),
-                                      String.valueOf(dateTimeDuration.get(1)) +" hr " + minutes ,
-                                          "ReminderEmail");
                     try {
-                        sendEmailService.sendHtmlMessage(u,e,"Reminder for the Event.",html);
+                        sendEmailService.sendHtmlMessage(u,e,"Reminder for the Event.", emailText);
                     } catch (MessagingException ex) {
                         ex.printStackTrace();
                     }
@@ -184,5 +153,36 @@ public class AdminService {
             }
         }
     }
+
+//    public void sendReminders(String eventName) {
+//        List<User> participants = userService.findAllUsers();
+//        for(User u : participants) {
+//            Set<Event> events = u.getEvents();
+//            for(Event e : events) {
+//                if (e.getName().equalsIgnoreCase(eventName)) {
+//                    List<Object> dateTimeDuration = eventService.getEventTimeAndDate(e.getStart_time(),e.getEnd_time());
+//
+//                    long min = (Long)dateTimeDuration.get(2) ;
+//                    String minutes = null;
+//                    if(min == 0 )
+//                        minutes = "";
+//                    else
+//                        minutes = String.valueOf(min) + " minutes";
+//
+//                    //sendEmailService.sendMail(u,e,"Reminder for the Event.", emailText);
+//                    String html = sendEmailService.parseReminderTemplate(u.getFirstname(), u.getLastname(),
+//                                                 e.getName(), e.getVenue(), String.valueOf(dateTimeDuration.get(3)),
+//                                                 String.valueOf(dateTimeDuration.get(4)),
+//                                      String.valueOf(dateTimeDuration.get(1)) +" hr " + minutes ,
+//                                          "ReminderEmail");
+//                    try {
+//                        sendEmailService.sendHtmlMessage(u,e,"Reminder for the Event.",html);
+//                    } catch (MessagingException ex) {
+//                        ex.printStackTrace();
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 }

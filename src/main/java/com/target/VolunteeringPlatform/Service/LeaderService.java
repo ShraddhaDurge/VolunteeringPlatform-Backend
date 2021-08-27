@@ -103,7 +103,9 @@ public class LeaderService {
                     event.getVenue(), dateIssued, "nomination_card");
 
         try {
-            sendEmailService.sendHtmlMessage(u,event,"Nomination for an event", html);
+            sendEmailService.sendHtmlMessage(u,event,"Rewards and Recognition", html);
+            System.out.println("Nomination card sent");
+
         } catch (MessagingException e) {
             e.printStackTrace();
         }

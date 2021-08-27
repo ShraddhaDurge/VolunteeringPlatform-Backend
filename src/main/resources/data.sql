@@ -10,19 +10,19 @@ INSERT INTO event (event_id, event_type, name, description, venue, start_time, e
 INSERT INTO event (event_id, event_type, name, description, venue, start_time, end_time) VALUES (10, 'Art And Craft','Draw and Improve', 'Draw and Improve', 'Gujarat',  '2021-07-20T17:30:00.000+00', '2021-07-20T20:30:00.000+00');
 
 --admin1
-INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (1,'spdurge99@gmail.com','Nikita','Deore','$2a$10$j9amWymVTsGRxLSo8aLhkuN9HaWHGpsrK9sNxXOlb3u0LSPP/goMq',1, 'ADMIN',3);
+INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (1,'spdurge99@gmail.com','Shraddha','Durge','$2a$10$j9amWymVTsGRxLSo8aLhkuN9HaWHGpsrK9sNxXOlb3u0LSPP/goMq',1, 'ADMIN',3);
 --admin2
-INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (2,'aryams11042000@gmail.com','Ajit','Kale','$2a$10$Av39pS3b1uNlQnzz6lWrKOcl1CJzL9oA41IsEqJ96GJy1sUt9o49S', 1, 'ADMIN',2);
+INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (2,'aryams11042000@gmail.com','Arya','M S','$2a$10$Av39pS3b1uNlQnzz6lWrKOcl1CJzL9oA41IsEqJ96GJy1sUt9o49S', 1, 'ADMIN',2);
 --leader1
-INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (3,'mspletters@gmail.com','Priya','Kate','$2a$10$SBehPJvm5jWQGmmfTRDtiurFizPhZ2qzIo.hUd19DTkz0kL4IoPku', 1,'LEADER',3);
+INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (3,'mspletters@gmail.com','Maanasa','S. Prasad','$2a$10$SBehPJvm5jWQGmmfTRDtiurFizPhZ2qzIo.hUd19DTkz0kL4IoPku', 1,'LEADER',3);
 --leader2
-INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (4,'shreya.b.patil.05@gmail.com','Akid','Khan','$2a$10$qsYFGexi12e3pWFM/maa/.n9DLOFWoHV2mL3iU7TclIiv.VAcR6Qq', 1,'LEADER', 2);
+INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (4,'shreya.b.patil.05@gmail.com','Shreya','Patil','$2a$10$qsYFGexi12e3pWFM/maa/.n9DLOFWoHV2mL3iU7TclIiv.VAcR6Qq', 1,'LEADER', 2);
 
 INSERT INTO user_events (user_user_id, events_event_id) VALUES (1,1);
 INSERT INTO user_events (user_user_id, events_event_id) VALUES (2,2);
 INSERT INTO user_events (user_user_id, events_event_id) VALUES (3,1);
 INSERT INTO user_events (user_user_id, events_event_id) VALUES (4,2);
---INSERT INTO user_events (user_user_id, events_event_id) VALUES (1,3);
---INSERT INTO user_events (user_user_id, events_event_id) VALUES (2,4);
---INSERT INTO user_events (user_user_id, events_event_id) VALUES (3,3);
---INSERT INTO user_events (user_user_id, events_event_id) VALUES (4,4);
+INSERT INTO user_events (user_user_id, events_event_id) VALUES (1,1);
+INSERT INTO user_events (user_user_id, events_event_id) VALUES (2,2);
+INSERT INTO user_events (user_user_id, events_event_id) VALUES (3,1);
+INSERT INTO user_events (user_user_id, events_event_id) VALUES (4,2);
