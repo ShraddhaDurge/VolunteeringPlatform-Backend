@@ -60,7 +60,7 @@ public class LeaderService {
                 System.out.println(pathToAttachment);
                 sendEmailService.sendEmailWithAttachment(u,event,"Certificate of Participation",
                         "Thank you!",pathToAttachment);
-                System.out.println("Certificate send");
+                System.out.println("Certificate sent");
             } catch (IOException | DocumentException e) {
                 e.printStackTrace();
             }
@@ -86,9 +86,10 @@ public class LeaderService {
 
     }
 
-    public void sendNominationCard(int userId,int eventId)
+    public void sendNominationCard(int userId, String eventName)
     {
-        Event event = eventService.getById(eventId);
+        System.out.println(eventName);
+        Event event = eventService.getByName(eventName);
         System.out.println(event);
         Date date = new Date();
         Timestamp currTimestamp = new Timestamp(date.getTime());

@@ -10,26 +10,29 @@
 <h1 id="cert-title">
     <center>Volunteer Certificate</center>
 </h1>
-<br/><br/>
-<br/>
-<center><p class="smaller" id="cert-declaration">
-    <b>&nbsp;&nbsp;<i>Presented to</i></b>
-</p>
 
-    <h1 id="cert-holder" th:text="${Firstname} + ' ' +${Surname}">
+<center>
+    <div id="middle">
+        <p class="smaller" id="cert-declaration">
+            <b>&nbsp;&nbsp;<i>Presented to</i></b>
+        </p>
+
+    <h1 id="cert-holder" th:text="'  ' + ${Firstname} + ' ' +${Surname}">
     </h1>
+        <div id="cert-desc">
+            <p class="larger" id='cert-details'>
+                &nbsp;&nbsp;&nbsp;&nbsp;<font size='4'><i>In recognition of your time and dedication in making the</i></font> <font color = "#be2d24" size='5'> <b th:text="${eventName}" > </b></font><font size='4'> <i>a success held at </i></font><font color = "#be2d24" size='5'><b th:text="${eventVenue}"> </b></font><font size='4'>. </font>
+            </p>
+        </div>
 
-    <div id="cert-desc">
-    <p class="larger" id='cert-details'>
-        &nbsp;&nbsp;&nbsp;&nbsp;<font size='4'><i>In recognition of your time and dedication in making the</i></font> <font color = "#be2d24" size='5'> <b th:text="${eventName}" > </b></font><font size='4'> <i>a success held at </i></font><font color = "#be2d24" size='5'><b th:text="${eventVenue}"> </b></font><font size='4'>. </font>
-    </p>
     </div>
-
 </center>
-<p class="sign"><img src="src/main/resources/images/sign.png"  id="sign" th:src="@{src/main/resources/images/sign.png}" /><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Signature</b></p>
+
+<p id="pic"><img src="src/main/resources/images/sign.png"  align="right" th:src="@{src/main/resources/images/sign.png}" /></p>
 
 
-<p class="large" id='cert-issued'>
-    &nbsp;&nbsp;<b>Issued on:</b> <b th:text="${eventDate}"></b></p>
+<p id='cert-issued'>
+    <br/><br/><br/><br/><br/><br/>
+    &nbsp;&nbsp;<b>Issued on:</b> <b th:text="${eventDate}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Signature</b></p>
 </body>
 </html>

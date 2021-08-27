@@ -45,6 +45,10 @@ public class EventService {
         return eventRepository.findById(event_id).orElseThrow(() -> new RuntimeException("Cannot Get Event By Id"));
     }
 
+    public Event getByName(String eventName) {
+        return eventRepository.findByName(eventName);
+    }
+
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
     }
@@ -84,7 +88,7 @@ public class EventService {
 
         String emailText = "Dear " + user.getFirstname() + " " + user.getLastname() + ", \n" +
                 "You have been successfully registered for " + event.getName() + "!" + "\n" +
-                "Thank you for signing up for " + event.getDescription() + ".\n\n" +
+                "Thank you for signing up for event designed for following purpose.\n " + event.getDescription() + ".\n\n" +
                 "Event Details:" + "\n\n " +
                 "   Date: " + String.valueOf(dateTimeDuration.get(3)) + " \n " +
                 "   Time: "+  String.valueOf(dateTimeDuration.get(4)) + " \n " +

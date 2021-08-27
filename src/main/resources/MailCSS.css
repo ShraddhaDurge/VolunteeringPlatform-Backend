@@ -1,0 +1,39 @@
+
+
+.invite{
+    padding: 10px 20px 30px 20px;
+
+}
+
+.subContainer{
+    width:fit-content;
+    align-items: center;
+    margin: auto;
+
+}
+
+h1{
+    color: azure;
+}
+
+
+h3{
+    color: #0870a3;
+    font-weight: bolder;
+}
+span{
+    color: #EF5350;
+
+    font-weight: bolder;
+}
+.details{
+    font-size: large;
+    font-weight: bold;
+}
+.eventDetails{
+    font-size: large;
+    width:50%;
+    margin: auto;
+    border-radius: 10px;
+
+}

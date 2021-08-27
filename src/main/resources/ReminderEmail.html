@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Invite</title>
+    <link rel="stylesheet" th:href="@{src/main/resources/MailCSS.css}" />
+</head>
+<body th:style="width:100%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: black;">
+<div class="container" th:style="width:40%;
+    background-image: url(https://wallpaperaccess.com/full/2155720.jpg);
+background-color:white;
+display:block;
+border-radius: 10px;
+margin: auto;">
+    <div class="header" th:style="background-image: url(https://i.pinimg.com/originals/29/96/7c/29967c0267d58120fbcb043020b09858.jpg);
+    background-color: #039BE5;
+    height: 20%;
+    width: 100%;
+    border-radius: 10px 10px 0 0 ;">
+        <div class="subContainerHeader" th:style="width:max-content;
+    display:flex;
+    align-items: center;
+    margin: auto;">
+            <img class="logo" width="50px" height="50px" src="src/main/resources/images/logobg.png"  th:src="@{src/main/resources/images/logobg.png}" />
+            <h1 th:text="${eventName}" th:style="color: azure;" />
+        </div>
+    </div>
+
+    <div class="invite">
+        <p th:text="'Dear ' + ${Firstname} + ' ' +${Surname} + ','" />
+        <p>Animal Shelter is coming soon, and we’d love to hear from you.</p>
+        <p>Don’t hesitate to reach out if you have questions, comments, or concerns regarding this year’s event.    </p>
+
+        <div class="eventDetails" th:style="font-size: large;
+    width:50%;
+    margin: auto;
+    border-radius: 10px;">
+            <div class="subContainer"><h3 th:style="color: #0870a3;
+    font-weight: bolder;">Event Details</h3></div>
+            <div class="subContainer details">
+                <p> <span th:text=" 'Date: ' + ${eventDate}" /> </br>
+                    <span th:text=" 'Time: ' + ${eventTime}" /> </br>
+                    <span th:text=" 'Duration: ' + ${eventDuration}" />  </br>
+                    <span th:text=" 'Venue: ' + ${eventVenue}" /> </p>
+
+            </div>
+        </div>
+
+        <p>Kindly show this email at the venue for the entry.
+            We are looking forward to seeing you there! </p>
+
+        Regards,<br>
+        Helping Hands Team
+    </div>
+</div>
+</body>
+</html>

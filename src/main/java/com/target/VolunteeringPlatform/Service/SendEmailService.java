@@ -4,6 +4,7 @@ import com.lowagie.text.DocumentException;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -69,6 +70,8 @@ public class SendEmailService {
 
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+//        FileSystemResource file = new FileSystemResource(attachment);
+//        helper.addInline(attachment.getName(), file);
         helper.setFrom(event.getName()+ " Team <helpinghands.igniteplus@gmail.com>");
         helper.setTo(user.getEmail());
         helper.setSubject(emailSubject);
@@ -91,6 +94,27 @@ public class SendEmailService {
         context.setVariable("eventVenue", venue);
         context.setVariable("eventDate", eventDate);
 
+        System.out.println(firstName + "  " + lastName + "  " +  eventName + "  " + venue + "  " + eventDate);
+
+        return templateEngine.process(template, context);
+    }
+
+    public String parseReminderTemplate(String firstName, String lastName, String eventName, String venue, String eventDate, String eventTime, String eventDuration, String template) {
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+
+        TemplateEngine templateEngine = new TemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver);
+
+        Context context = new Context();
+        context.setVariable("Firstname", firstName);
+        context.setVariable("Surname", lastName);
+        context.setVariable("eventName", eventName);
+        context.setVariable("eventVenue", venue);
+        context.setVariable("eventDate", eventDate);
+        context.setVariable("eventDuration", eventName);
+        context.setVariable("eventTime", venue);
         System.out.println(firstName + "  " + lastName + "  " +  eventName + "  " + venue + "  " + eventDate);
 
         return templateEngine.process(template, context);

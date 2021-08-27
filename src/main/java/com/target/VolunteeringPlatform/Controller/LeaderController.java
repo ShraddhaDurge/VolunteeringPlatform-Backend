@@ -51,13 +51,13 @@ public class LeaderController {
     }
 
     //Send nomination card to user for an event
-    @PostMapping(value = "/sendNominationCard/{user_id}/{event_id}")
-    public ResponseEntity<?> sendNominationCard(@PathVariable("user_id") int user_id, @PathVariable("event_id") int event_id) {
+    @PostMapping(value = "/sendNominationCard/{user_id}/{event_name:[a-zA-Z &+-]*}")
+    public ResponseEntity<?> sendNominationCard(@PathVariable("user_id") int user_id, @PathVariable("event_name") String event_name) {
         //check if event exists in database
-        if (!eventService.existsById(event_id)) {
+        if (!eventService.existsByName(event_name)) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Event Id doesn't exist"));
+                    .body(new MessageResponse("Event Name doesn't exist"));
         }
         //check if user exists in database
         if (!userService.existsById(user_id)) {
@@ -66,7 +66,7 @@ public class LeaderController {
                     .body(new MessageResponse("User doesn't exist"));
         }
 
-        leaderService.sendNominationCard(user_id, event_id);         //send certificates mails
+        leaderService.sendNominationCard(user_id, event_name);         //send certificates mails
         return ResponseEntity.ok(new MessageResponse("Nomination card was sent successfully!"));
     }
 }

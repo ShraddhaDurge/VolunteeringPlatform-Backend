@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Saira+Condensed:700');
 
 
+
 @page { size: A4 landscape;}
 
 #logo {
@@ -9,13 +10,14 @@
 }
 p.sign{
 
-  margin-left: 780px;
+  margin-left:5000px;
   margin-top: 100px;
 
 }
-p.large{
+p.pos{
 
-  margin-top: -25px;
+  margin-left:5000px;
+  margin-top: 100px;
 
 }
 
@@ -45,8 +47,8 @@ h1 {
 }
 
 body {
-  width: 950px;
-  height: 690px;
+  width: 925px;
+  height: 605px;
   position: absolute;
   left: 30px;
   top: 30px;
@@ -63,8 +65,8 @@ p {
 
 html {
   display: inline-block;
-  width: 1024px;
-  height: 768px;
+  width: 1015px;
+  height: 685px;
 
   border: 5px solid red;
  background:#eee url("bg.jpg") no-repeat;
@@ -76,15 +78,24 @@ p.smaller {
   margin-top: 8%;
 }
 
+p.id {
+  margin-left: 50%;
+}
+
 p.smaller {
   font-size: 17px !important;
 }
 
-div#cert-desc {
+/* div#cert-desc {
   width: 70%;
-}
+} */
 
 p#cert-from {
   font-family: 'Saira Condensed', sans-serif;
 }
 
+p .cert-issued{
+  align-self: left;
+  margin-top: 500px;
+  margin-bottom: 500px;
+}
