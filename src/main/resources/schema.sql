@@ -10,6 +10,11 @@ CREATE TABLE IF NOT EXISTS event (
   PRIMARY KEY (event_id)
 );
 
+--CREATE TABLE IF NOT EXISTS images (
+--    image_id int NOT NULL AUTO_INCREMENT,
+--    image varchar(max)
+--);
+
 CREATE TABLE IF NOT EXISTS user (
   user_id bigint(20) NOT NULL,
   email varchar(255) DEFAULT NULL,
@@ -30,6 +35,14 @@ CREATE TABLE IF NOT EXISTS user_events (
   FOREIGN KEY (events_event_id) REFERENCES event(event_id)
 
 );
+
+--CREATE TABLE IF NOT EXISTS event_images (
+--  events_event_id int NOT NULL,
+--  images_image_id  int NOT NULL,
+--  FOREIGN KEY (images_image_id) REFERENCES images(image_id),
+--  FOREIGN KEY (events_event_id) REFERENCES event(event_id)
+--
+--);
 
 CREATE TABLE profile (
     profile_id bigint(20) NOT NULL,
@@ -56,3 +69,8 @@ CREATE SEQUENCE event_id_seq
 CREATE SEQUENCE user_id_seq
   START WITH 5
   INCREMENT BY 1;
+
+CREATE SEQUENCE image_id_seq
+    START WITH 1
+    INCREMENT BY 1;
+

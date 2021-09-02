@@ -1,5 +1,8 @@
 package com.target.VolunteeringPlatform.model;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.sql.Timestamp;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -45,6 +48,14 @@ public class Event {
     @Column(name="image")
     private String image;
 
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "event_images",
+//            joinColumns = @JoinColumn(name = "events_event_id"),
+//            inverseJoinColumns = @JoinColumn(name = "images_image_id")
+//    )
+//    private Set<Images> images;
 
     public Event() {
     }

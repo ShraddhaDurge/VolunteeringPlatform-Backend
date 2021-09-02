@@ -4,12 +4,10 @@ import com.target.VolunteeringPlatform.PayloadRequest.EventRequest;
 import com.target.VolunteeringPlatform.model.Event;
 import com.target.VolunteeringPlatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 
 import javax.mail.MessagingException;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +23,9 @@ public class AdminService {
 
     @Autowired
     SendEmailService sendEmailService;
+
+//    @Autowired
+//    ImageRepository imageRepository;
 
 //    @Value("classpath:images/logobg.png")
 //    File resourceFile;
@@ -47,6 +48,11 @@ public class AdminService {
         Event event = eventService.getById(event_id);
         System.out.println(event + "  "+imageBytes);
         String encodedImage = Base64Utils.encodeToString(imageBytes);
+//        Set<Images> images = event.getImages();
+//        Images newImage = new Images(encodedImage);
+//        imageRepository.save(newImage);
+//        images.add(newImage);
+//        event.setImages(images);
         Event newEvent = new Event(
                 event.getEvent_id(),
                 event.getEvent_type(),
