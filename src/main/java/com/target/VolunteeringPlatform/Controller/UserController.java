@@ -42,7 +42,6 @@ public class UserController {
     PasswordEncoder encoder;
 
     //Registration endpoint for new users to sign up
-    @CrossOrigin("http://localhost:3000")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@RequestBody SignupRequest newUser) {
 
@@ -59,7 +58,6 @@ public class UserController {
     }
 
     //Validate and login existing user
-    @CrossOrigin("http://localhost:3000")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> validateUser(@RequestBody LoginRequest loginRequest) {
         //User authentication
@@ -81,7 +79,6 @@ public class UserController {
     }
 
     //add profile details to already existing user
-    @CrossOrigin("http://localhost:3000")
     @RequestMapping(value = "/saveProfile", method = RequestMethod.POST)
     public ResponseEntity<?> createProfile(@RequestBody ProfileRequest profileRequest){
 
@@ -99,7 +96,6 @@ public class UserController {
     }
 
     //Get profile details associated with certain userId
-    @CrossOrigin("http://localhost:3000")
     @GetMapping(value = "/getProfile/{userId}")
     public ResponseEntity<?> getProfile(@PathVariable int userId){
         //check if user profile exists in database

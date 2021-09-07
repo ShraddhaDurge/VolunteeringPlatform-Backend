@@ -21,7 +21,6 @@ import java.util.List;
 
 //Controller class for Admin specific functionalities
 @RestController
-@CrossOrigin("http://localhost:3000")
 @RequestMapping("/account/admin")
 public class AdminController {
     @Autowired
