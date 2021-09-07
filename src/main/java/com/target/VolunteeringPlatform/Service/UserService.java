@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Service
-public class UserService implements org.springframework.security.core.userdetails.UserDetailsService {
+public class UserService implements UserDetailsService {
 	@Autowired
 	UserRepository userRepository;
 
