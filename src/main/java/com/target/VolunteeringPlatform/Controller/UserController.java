@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 //Controller class for user specific functionalities
 @RestController
 @RequestMapping("/account")
+@CrossOrigin("https://helping-hands-frontend.herokuapp.com")
 public class UserController {
 
     @Autowired

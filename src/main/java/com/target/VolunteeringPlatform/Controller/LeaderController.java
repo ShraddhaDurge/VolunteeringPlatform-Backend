@@ -13,6 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/account/leader")
+@CrossOrigin("https://helping-hands-frontend.herokuapp.com")
 public class LeaderController {
 
     @Autowired

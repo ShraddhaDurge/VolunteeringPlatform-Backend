@@ -22,6 +22,7 @@ import java.util.List;
 //Controller class for Admin specific functionalities
 @RestController
 @RequestMapping("/account/admin")
+@CrossOrigin("https://helping-hands-frontend.herokuapp.com")
 public class AdminController {
     @Autowired
     EventService eventService;

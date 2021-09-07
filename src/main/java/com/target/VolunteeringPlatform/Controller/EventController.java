@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/account/events")
+@CrossOrigin("https://helping-hands-frontend.herokuapp.com")
 public class EventController {
     @Autowired
     EventService eventService;
