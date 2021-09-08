@@ -52,6 +52,7 @@ dependencies {
 	implementation 'com.itextpdf:itextpdf:5.5.13.2'
 	implementation 'net.sf.cssbox:pdf2dom:2.0.0'
 	implementation 'commons-fileupload:commons-fileupload:1.4'
+	implementation 'org.springframework.boot:spring-boot-starter-parent:1.2.1.RELEASE'
 }
 
 test {
