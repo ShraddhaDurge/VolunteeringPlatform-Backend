@@ -59,7 +59,8 @@ public class LeaderService {
                 String pathToAttachment = System.getProperty("user.home") + File.separator + u.getId() + ".pdf";
                 System.out.println(pathToAttachment);
                 sendEmailService.sendEmailWithAttachment(u,event,"Certificate of Participation",
-                        "Thank you!",pathToAttachment);
+                        "Thank you for your participation! We applaud to your efforts to make difference in life. ",
+                        pathToAttachment);
                 System.out.println("Certificate sent");
             } catch (IOException | DocumentException e) {
                 e.printStackTrace();

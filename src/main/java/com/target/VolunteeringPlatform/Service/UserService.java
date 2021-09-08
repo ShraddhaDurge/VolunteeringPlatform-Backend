@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Service
-public class UserService implements org.springframework.security.core.userdetails.UserDetailsService {
+public class UserService implements UserDetailsService {
 	@Autowired
 	UserRepository userRepository;
 
@@ -50,7 +50,7 @@ public class UserService implements org.springframework.security.core.userdetail
 
 	public Profile saveProfile(ProfileRequest profileRequest) {
 		User user = userRepository.findByEmail(profileRequest.getEmail());
-		System.out.println(user);;
+		System.out.println(user);
 
         List<Profile> allProfiles = profileRepository.findAll();
         String pattern = "yyyy-MM-dd";

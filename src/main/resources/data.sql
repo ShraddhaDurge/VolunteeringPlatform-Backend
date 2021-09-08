@@ -20,7 +20,7 @@ INSERT INTO user (user_id, email, first_name, last_name, password, active, role,
 --leader2
 INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (5,'shreya.b.patil.05@gmail.com','Shreya','Patil','$2a$10$qsYFGexi12e3pWFM/maa/.n9DLOFWoHV2mL3iU7TclIiv.VAcR6Qq', 1,'LEADER', 2);
 --leader3
-INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (6,'odetomusic1347@gmail.com','Geethanjali','Mathu','	$2a$10$yzTYh9bdKe0ErdOIFsMuQe0oPi2ulFsX7QE98oMRiPk8a1XY3d1gO', 1,'LEADER', 4);
+INSERT INTO user (user_id, email, first_name, last_name, password, active, role, hours) VALUES (6,'odetomusic1347@gmail.com','Geethanjali','Mathu','$2a$10$yzTYh9bdKe0ErdOIFsMuQe0oPi2ulFsX7QE98oMRiPk8a1XY3d1gO', 1,'LEADER', 4);
 
 
 INSERT INTO user_events (user_user_id, events_event_id) VALUES (1,1);
