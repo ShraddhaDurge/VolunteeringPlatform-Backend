@@ -4,15 +4,6 @@ plugins {
 	id 'java'
 }
 
-jar {
-	manifest {
-		attributes(
-
-				'Main-Class': 'com.target.VolunteeringPlatform.VolunteeringPlatformApplication'
-		)
-	}
-}
-
 group = 'com.target'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
@@ -27,6 +18,11 @@ task stage(type: Copy, dependsOn: [clean, build]) {
 }
 
 stage.mustRunAfter(clean)
+
+configurations {
+	// configuration that holds jars to include in the jar
+	jarLibs
+}
 
 clean.doLast {
 	project.file('app.jar').delete()
@@ -55,6 +51,17 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-parent:1.2.1.RELEASE'
 }
 
+jar {
+	manifest {
+		attributes(
+
+				'Main-Class': 'com.target.VolunteeringPlatform.VolunteeringPlatformApplication'
+		)
+	}
+	from {
+		configurations.runtimeClasspath.filter{ it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
+	}
+}
 test {
 	useJUnitPlatform()
 }
