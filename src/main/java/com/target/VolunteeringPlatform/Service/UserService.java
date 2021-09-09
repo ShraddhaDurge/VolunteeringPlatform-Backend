@@ -27,14 +27,16 @@ public class UserService implements UserDetailsService {
 	ProfileRepository profileRepository;
 
 	public void saveUser(User user) {
-		user.setActive(1);
-		user.setRole("USER");
 		userRepository.save(user);
 	}
 
 	public User userSearchByEmail( String email) {
        return userRepository.findByEmail(email);
     }
+
+    public Boolean userExistsByEmail( String email) {
+		return userRepository.existsByEmail(email);
+	}
 
     public User findUserById( int userId) {
 		return userRepository.findById(userId);

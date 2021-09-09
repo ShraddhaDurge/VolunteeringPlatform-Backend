@@ -33,9 +33,6 @@ public class UserController {
     UserService userService;
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
@@ -47,13 +44,14 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody SignupRequest newUser) {
 
         //check if user email already exist in database
-        if (userService.userSearchByEmail(newUser.getEmail()) != null) {
+        if (userService.userExistsByEmail(newUser.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already taken!"));
         }
         User user = new User(newUser.getEmail(),newUser.getFirstname(),newUser.getLastname(), encoder.encode(newUser.getPassword()));
-
+        user.setActive(1);
+        user.setRole("USER");
         userService.saveUser(user);             //save new user details in database
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
@@ -85,8 +83,9 @@ public class UserController {
     @RequestMapping(value = "/saveProfile", method = RequestMethod.POST)
     public ResponseEntity<?> createProfile(@RequestBody ProfileRequest profileRequest){
 
+        System.out.println(userService.userExistsByEmail(profileRequest.getEmail()));
         //check if user email exists in database
-        if (userService.userSearchByEmail(profileRequest.getEmail()) == null) {
+        if (!userService.userExistsByEmail(profileRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: User does not exists!"));

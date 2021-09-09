@@ -55,5 +55,16 @@ public class LoginResponse {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+
+    @Override
+    public String toString() {
+        return "LoginResponse{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", roles='" + roles + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                '}';
+    }
 }
 
