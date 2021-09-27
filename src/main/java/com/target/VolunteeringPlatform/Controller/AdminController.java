@@ -24,6 +24,7 @@ import java.util.List;
 @CrossOrigin("http://localhost:3000")
 @RequestMapping("/account/admin")
 public class AdminController {
+
     @Autowired
     EventService eventService;
 

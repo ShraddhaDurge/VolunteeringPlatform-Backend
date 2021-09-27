@@ -41,9 +41,9 @@ public class UserControllerTest {
     @Test
     void createUserTest_emailAlreadyTaken(){
         SignupRequest newUser = new SignupRequest("firstname","lastname","demo@gmail.com","abc@123");
-        String expectedResponse = "MessageResponse{message='Error: Email is already taken!'}";
         when(userService.userExistsByEmail(anyString())).thenReturn(true);
         ResponseEntity<?> response = userController.createUser(newUser);
+        String expectedResponse = "MessageResponse{message='Error: Email is already taken!'}";
         assertEquals(expectedResponse,response.getBody().toString());
     }
 

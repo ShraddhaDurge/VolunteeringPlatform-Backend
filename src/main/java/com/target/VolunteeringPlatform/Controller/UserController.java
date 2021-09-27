@@ -1,6 +1,5 @@
 package com.target.VolunteeringPlatform.Controller;
 
-import com.target.VolunteeringPlatform.DAO.UserRepository;
 import com.target.VolunteeringPlatform.PayloadRequest.LoginRequest;
 import com.target.VolunteeringPlatform.PayloadRequest.ProfileRequest;
 import com.target.VolunteeringPlatform.PayloadRequest.SignupRequest;
