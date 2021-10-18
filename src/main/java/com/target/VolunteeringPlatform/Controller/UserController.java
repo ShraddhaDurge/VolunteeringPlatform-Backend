@@ -6,7 +6,7 @@ import com.target.VolunteeringPlatform.PayloadRequest.SignupRequest;
 import com.target.VolunteeringPlatform.PayloadResponse.LoginResponse;
 import com.target.VolunteeringPlatform.PayloadResponse.MessageResponse;
 import com.target.VolunteeringPlatform.Service.UserService;
-import com.target.VolunteeringPlatform.model.UserDetailsImpl;
+import com.target.VolunteeringPlatform.Service.UserDetailsImpl;
 import com.target.VolunteeringPlatform.model.Profile;
 import com.target.VolunteeringPlatform.model.User;
 

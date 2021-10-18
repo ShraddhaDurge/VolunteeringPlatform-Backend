@@ -1,6 +1,7 @@
-package com.target.VolunteeringPlatform.model;
+package com.target.VolunteeringPlatform.Service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.target.VolunteeringPlatform.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

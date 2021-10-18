@@ -5,7 +5,6 @@ import com.target.VolunteeringPlatform.DAO.UserRepository;
 import com.target.VolunteeringPlatform.PayloadRequest.ProfileRequest;
 import com.target.VolunteeringPlatform.model.Profile;
 import com.target.VolunteeringPlatform.model.User;
-import com.target.VolunteeringPlatform.model.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
