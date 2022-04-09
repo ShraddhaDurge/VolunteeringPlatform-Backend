@@ -1,7 +1,7 @@
-package com.target.VolunteeringPlatform.model;
+package com.target.VolunteeringPlatform.Service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-//import com.target.VolunteeringPlatform.model.Role;
+import com.target.VolunteeringPlatform.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,6 +36,7 @@ public class UserDetailsImpl implements UserDetails {
 	}
 	public static UserDetailsImpl build(User user) {
 		List<GrantedAuthority> authorities = new ArrayList<>();
+		System.out.println(user.getRole());
 		authorities.add(new SimpleGrantedAuthority(user.getRole()));
 		return new UserDetailsImpl(
 				user.getId(),

@@ -40,6 +40,16 @@ public class ProfileRequest {
         this.address = address;
     }
 
+    public ProfileRequest(String email, String mobile_number, Date dob, String about, String gender, String location, String address) {
+        this.email = email;
+        this.mobile_number = mobile_number;
+        this.dob = dob;
+        this.about = about;
+        this.gender = gender;
+        this.location = location;
+        this.address = address;
+    }
+
     public String getEmail() {
         return email;
     }

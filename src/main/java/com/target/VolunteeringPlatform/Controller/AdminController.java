@@ -24,6 +24,7 @@ import java.util.List;
 @RequestMapping("/account/admin")
 @CrossOrigin("https://helping-hands-frontend.herokuapp.com")
 public class AdminController {
+
     @Autowired
     EventService eventService;
 

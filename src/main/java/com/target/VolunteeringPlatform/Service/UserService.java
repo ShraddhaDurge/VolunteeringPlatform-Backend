@@ -5,7 +5,6 @@ import com.target.VolunteeringPlatform.DAO.UserRepository;
 import com.target.VolunteeringPlatform.PayloadRequest.ProfileRequest;
 import com.target.VolunteeringPlatform.model.Profile;
 import com.target.VolunteeringPlatform.model.User;
-import com.target.VolunteeringPlatform.model.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,14 +26,16 @@ public class UserService implements UserDetailsService {
 	ProfileRepository profileRepository;
 
 	public void saveUser(User user) {
-		user.setActive(1);
-		user.setRole("USER");
 		userRepository.save(user);
 	}
 
 	public User userSearchByEmail( String email) {
        return userRepository.findByEmail(email);
     }
+
+    public Boolean userExistsByEmail( String email) {
+		return userRepository.existsByEmail(email);
+	}
 
     public User findUserById( int userId) {
 		return userRepository.findById(userId);
@@ -50,7 +51,7 @@ public class UserService implements UserDetailsService {
 
 	public Profile saveProfile(ProfileRequest profileRequest) {
 		User user = userRepository.findByEmail(profileRequest.getEmail());
-		System.out.println(user);;
+		System.out.println(user);
 
         List<Profile> allProfiles = profileRepository.findAll();
         String pattern = "yyyy-MM-dd";

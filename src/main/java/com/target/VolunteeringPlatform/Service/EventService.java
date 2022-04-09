@@ -125,7 +125,7 @@ public class EventService {
                 }
             }
         }
-        if(isFutureEvent == true)
+        if(isFutureEvent)
             return futureEvents;
         else
             return pastEvents;
@@ -135,11 +135,7 @@ public class EventService {
 
         User user = userService.findUserById(userId);
         Set<Event> events = user.getEvents();
-        int eventCount = 0;
-        for (Event event : events) {
-            eventCount++;
-        }
-        EventParticipatedResponse eventResponse = new EventParticipatedResponse(events, eventCount);
+        EventParticipatedResponse eventResponse = new EventParticipatedResponse(events, events.size());
         return eventResponse;
     }
 

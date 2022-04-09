@@ -78,6 +78,7 @@ public class AdminService {
 
         eventService.saveEvent(event);
         System.out.println(event);
+
         List<User> participants = getAllParticipants(event.getName());
         for(User u : participants) {
             List<Object> dateTimeDuration = eventService.getEventTimeAndDate(event.getStart_time(), event.getEnd_time());
