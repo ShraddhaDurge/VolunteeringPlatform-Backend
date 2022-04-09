@@ -13,20 +13,49 @@ repositories {
 }
 apply plugin: 'java'
 
-task stage(type: Copy, dependsOn: [clean, build]) {
-	from jar.archivePath into project.rootDir rename { 'app.jar' }
+//create a single Jar with all dependencies
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'com.target.VolunteeringPlatform.VolunteeringPlatformApplication'
+		)
+	}
 }
 
-stage.mustRunAfter(clean)
+task fatJar(type: Jar) {
+	manifest.from jar.manifest
 
-configurations {
-	// configuration that holds jars to include in the jar
-	jarLibs
+//    classifier = 'all'
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from {
+		configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+	} {
+		exclude "META-INF/*.SF"
+		exclude "META-INF/*.DSA"
+		exclude "META-INF/*.RSA"
+	}
+	with jar
 }
 
-clean.doLast {
-	project.file('app.jar').delete()
+artifacts {
+	archives fatJar
 }
+//
+//task stage(type: Copy, dependsOn: [clean, build]) {
+//	from jar.archivePath into project.rootDir rename { 'app.jar' }
+//}
+
+//stage.mustRunAfter(clean)
+
+//configurations {
+//	// configuration that holds jars to include in the jar
+//	extraLibs
+//
+//}
+
+//clean.doLast {
+//	project.file('app.jar').delete()
+//}
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -51,17 +80,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-parent:1.2.1.RELEASE'
 }
 
-jar {
-	manifest {
-		attributes(
-
-				'Main-Class': 'com.target.VolunteeringPlatform.VolunteeringPlatformApplication'
-		)
-	}
-	from {
-		configurations.runtimeClasspath.filter{ it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
-	}
-}
 test {
 	useJUnitPlatform()
 }
