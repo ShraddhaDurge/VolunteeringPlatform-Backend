@@ -24,8 +24,9 @@ jar {
 
 task fatJar(type: Jar) {
 	manifest.from jar.manifest
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
 //    classifier = 'all'
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 	from {
 		configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
 	} {
